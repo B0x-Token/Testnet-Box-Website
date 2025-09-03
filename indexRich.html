@@ -5808,12 +5808,12 @@ body.stats-active .content,
             <div class="stat-label-rich">Total Holders</div>
         </div>
         <div class="stat-card-rich">
-            <div class="stat-value-rich" id="totalB0x">-</div>
-            <div class="stat-label-rich">Total B0x</div>
+            <div class="stat-value-rich" id="totalBaseB0x">-</div>
+            <div class="stat-label-rich">Total Base B0x</div>
         </div>
         <div class="stat-card-rich">
-            <div class="stat-value-rich" id="total0xBTC">-</div>
-            <div class="stat-label-rich">Total 0xBTC</div>
+            <div class="stat-value-rich" id="totalETHB0x">-</div>
+            <div class="stat-label-rich">Total ETH B0x</div>
         </div>
         <div class="stat-card-rich">
             <div class="stat-value-rich" id="lastUpdated">-</div>
@@ -23021,7 +23021,7 @@ function getMinerNameLinkHTML(address, known_miners) {
     var readable_name = address.substr(0, 14) + '...';
     var address_url = _BLOCK_EXPLORER_ADDRESS_URL + address;
   }
-f
+
   return '<a href="' + address_url + '" target="_blank">' + poolstyle + readable_name + '</span></a>';
 }
 
@@ -25122,34 +25122,47 @@ function adjustTableForScreenSize() {
                 document.getElementById('tableContent').innerHTML = '<div class="error-rich">Error loading data. Please try again.</div>';
             }
         }
-
+        var rankETHb0x=0;
+        var rankBaseb0x=0;
         function combineData() {
             const addressMap = new Map();
 
+         rankETHb0x=0;
+        rankBaseb0x=0;
             // Process Base data
             baseData.holders.forEach(holder => {
+                rankBaseb0x=rankBaseb0x+1;
                 addressMap.set(holder.address, {
                     address: holder.address,
                     b0xBalance: parseFloat(holder.balanceFormatted) || 0,
                     b0xBalanceRaw: holder.balance,
-                    oxbtcBalance: 0,
-                    oxbtcBalanceRaw: '0'
+                    ethB0xBalance: 0,
+                    ethB0xBalanceRaw: '0',
+                    RankBaseB0x: rankBaseb0x,
+
                 });
             });
 
             // Process ETH data
             ethData.holders.forEach(holder => {
+                rankETHb0x=rankETHb0x+1;
                 const existing = addressMap.get(holder.address);
                 if (existing) {
-                    existing.oxbtcBalance = parseFloat(holder.balanceFormatted) || 0;
-                    existing.oxbtcBalanceRaw = holder.balance;
+                    existing.ethB0xBalance = parseFloat(holder.balanceFormatted) || 0;
+                    existing.ethB0xBalanceRaw = holder.balance;
+                    existing.rankETHb0x = rankETHb0x;
                 } else {
+                rankBaseb0x=rankBaseb0x+1;
                     addressMap.set(holder.address, {
                         address: holder.address,
                         b0xBalance: 0,
                         b0xBalanceRaw: '0',
-                        oxbtcBalance: parseFloat(holder.balanceFormatted) || 0,
-                        oxbtcBalanceRaw: holder.balance
+                        ethB0xBalance: parseFloat(holder.balanceFormatted) || 0,
+                        ethB0xBalanceRaw: holder.balance,
+                        RankETHB0x: rankETHb0x,
+                        RankBaseB0x: rankBaseb0x
+
+
                     });
                 }
             });
@@ -25157,32 +25170,38 @@ function adjustTableForScreenSize() {
 
             // Filter out addresses with zero balances for both tokens
             combinedData = combinedData.filter(holder => 
-            holder.b0xBalance > 0 || holder.oxbtcBalance > 0
+            holder.b0xBalance > 0 || holder.ethB0xBalance > 0
             );
 
             sortData();
             filteredData2 = [...combinedData];
         }
 
+        var sortByB0xBaseChain=true;
         function sortData() {
             combinedData.sort((a, b) => {
                 if (currentSort === 'b0x') {
+                    sortByB0xBaseChain=true;
                     return b.b0xBalance - a.b0xBalance;
+                    
                 } else {
-                    return b.oxbtcBalance - a.oxbtcBalance;
+                    sortByB0xBaseChain=false;
+                    return b.ethB0xBalance - a.ethB0xBalance;
                 }
             });
         }
 
         function updateStats() {
             const totalHolders = combinedData.length;
-            const totalB0x = combinedData.reduce((sum, holder) => sum + holder.b0xBalance, 0);
-            const total0xBTC = combinedData.reduce((sum, holder) => sum + holder.oxbtcBalance, 0);
+            const totalBaseB0x = combinedData.reduce((sum, holder) => sum + holder.b0xBalance, 0);
+            const totalETHB0x = combinedData.reduce((sum, holder) => sum + holder.ethB0xBalance, 0);
+
+            console.log("TOTAL ETH B0x: ",totalETHB0x);
             const lastUpdated = new Date(baseData.lastUpdated).toLocaleString();
 
             document.getElementById('totalHolders').textContent = totalHolders.toLocaleString();
-            document.getElementById('totalB0x').textContent = totalB0x.toLocaleString(undefined, { maximumFractionDigits: 2 });
-            document.getElementById('total0xBTC').textContent = total0xBTC.toLocaleString(undefined, { maximumFractionDigits: 2 });
+            document.getElementById('totalBaseB0x').textContent = totalBaseB0x.toLocaleString(undefined, { maximumFractionDigits: 2 });
+            document.getElementById('totalETHB0x').textContent = totalETHB0x.toLocaleString(undefined, { maximumFractionDigits: 2 });
             document.getElementById('lastUpdated').textContent = lastUpdated;
         }
 
@@ -25220,10 +25239,10 @@ function fixsize(){
         cells.forEach(cell => {
             cell.style.padding = '4px 2px';
             if (cell.classList.contains('balance-rich')) {
-                cell.style.fontSize = '1.6em';
+                cell.style.fontSize = '2em';
             }
             if (cell.classList.contains('address-rich')) {
-                cell.style.fontSize = '0.6em';
+                cell.style.fontSize = '0.75em';
             }
         });
        } else if (screenWidth <= 1024) {
@@ -25301,22 +25320,28 @@ function fixsize(){
                         <tr>
                             <th class="balance-th-rank">Rank</th>
                             <th class="balance-th">Address</th>
-                            <th class="balance-th-balance">B0x Balance</th>
-                            <th class="balance-th-balance">0xBTC Balance</th>
+                            <th class="balance-th-balance">ETH B0x Balance</th>
+                            <th class="balance-th-balance">Base B0x Balance</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
 
             pageData.forEach((holder, index) => {
-                const rank = start + index + 1;
+                var rank = ""
+                if(sortByB0xBaseChain){
+                    rank = holder.RankBaseB0x.toLocaleString(undefined, { maximumFractionDigits: 6 })
+                }else{
+
+                    rank = holder.RankETHB0x.toLocaleString(undefined, { maximumFractionDigits: 6 })
+                }
                 tableHTML += `
                     <tr>
                         <td class="spot-rich">#${rank}</td>
                         <td class="address-rich"><a href="${_BLOCK_EXPLORER_ADDRESS_URL}${holder.address}" target="_blank">${holder.address}</a></td>
 
                         <td class="balance-rich">${holder.b0xBalance.toLocaleString(undefined, { maximumFractionDigits: 6 })}</td>
-                        <td class="balance-rich">${holder.oxbtcBalance.toLocaleString(undefined, { maximumFractionDigits: 6 })}</td>
+                        <td class="balance-rich">${holder.ethB0xBalance.toLocaleString(undefined, { maximumFractionDigits: 6 })}</td>
                     </tr>
                 `;
             });
