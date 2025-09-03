@@ -397,7 +397,7 @@
         backdrop-filter: none;
         border-bottom: 3px solid rgba(255, 255, 255, 0.1);
         color: white;
-        padding: 40px 30px;
+        padding: 10px 5px;
         text-align: center;
         position: relative;
         overflow: hidden;
@@ -665,7 +665,7 @@
 
 /* Original content rule - but not in stats */
 body .content {
-    padding: 40px;
+    padding: 10px;
     min-height: 500px;
     background: rgba(0, 0, 0, 0.1);
 }
@@ -3322,7 +3322,7 @@ body #stats .content {
 
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 5px;
             }
             
             .header {
@@ -3584,9 +3584,9 @@ body #stats .content {
             
 
 
-        @media (max-width: 768px) {f
+        @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 5px;
             }
             
             
@@ -21734,10 +21734,47 @@ function updateURL(tabName) {
                     document.querySelector('.content').style.padding = '0px';
                 } else {
                     // Restore padding for other tabs
-                    document.querySelector('.content').style.padding = '40px';
+                    setPadding();
                 }
                 
     }
+// Option 1: JavaScript with resize listener
+function setPadding() {
+
+
+// Find the active tab before removing the class
+const activeTab = document.querySelector('.nav-tab.active');
+
+
+if(activeTab == 'stats'){
+
+
+
+  const contentEl = document.querySelector('.content');
+  if (window.innerWidth < 1000) {
+    contentEl.style.padding = '0px';
+  } else {
+    contentEl.style.padding = '25px';
+  }
+
+}else{
+
+  const contentEl = document.querySelector('.content');
+  if (window.innerWidth < 1000) {
+    contentEl.style.padding = '3px';
+  } else {
+    contentEl.style.padding = '25px';
+  }
+
+    
+}
+}
+
+// Set initial padding
+setPadding();
+
+// Update padding on window resize
+window.addEventListener('resize', setPadding);
 
 
     async function switchTabForStats(){
