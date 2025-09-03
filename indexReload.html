@@ -26361,7 +26361,7 @@ async function startCountdown() {
       el.textContent = count;
     });
     
-    if (count <= 0) {
+    if (count < 0) {
       clearInterval(interval);
       if(!inFunctionDontRefresh) {
         runReloadFunctions();
