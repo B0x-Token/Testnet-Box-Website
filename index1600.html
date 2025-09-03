@@ -5648,13 +5648,11 @@ body.stats-active .content,
             padding: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
             min-height: 100vh;
         }
 
         #b0x-main-content {
-            background: white;
             border-radius: 15px;
             padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -5664,11 +5662,10 @@ body.stats-active .content,
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #2a5298;
         }
 
         #b0x-title {
-            color: #1e3c72;
+            color: white;
             font-size: 2.5em;
             margin: 0;
             font-weight: bold;
@@ -5676,30 +5673,29 @@ body.stats-active .content,
         }
 
         #b0x-subtitle {
-            color: #666;
+            color: white;
             font-size: 1.2em;
             margin: 10px 0 0 0;
         }
 
         .b0x-section {
             margin-bottom: 35px;
-            background: #f8f9fa;
             padding: 25px;
             border-radius: 10px;
             border-left: 5px solid #2a5298;
         }
 
         .b0x-section-title {
-            color: #1e3c72;
+            color: white;
             font-size: 1.5em;
             margin-bottom: 15px;
             font-weight: bold;
         }
 
         .b0x-step {
+            color: white;
             margin-bottom: 20px;
             padding: 15px;
-            background: white;
             border-radius: 8px;
             border: 1px solid #e9ecef;
         }
@@ -5760,7 +5756,7 @@ body.stats-active .content,
         }
 
         .b0x-external-link {
-            color: #2a5298;
+            color: #FFD700;
             text-decoration: none;
             font-weight: bold;
             border-bottom: 2px solid transparent;
@@ -5768,7 +5764,7 @@ body.stats-active .content,
         }
 
         .b0x-external-link:hover {
-            border-bottom-color: #2a5298;
+            border-bottom-color: #FFD700 ;
         }
 
         .b0x-config-block {
@@ -5832,7 +5828,6 @@ body.stats-active .content,
         }
 
         .b0x-platform-card {
-            background: white;
             padding: 20px;
             border-radius: 10px;
             border: 2px solid #e9ecef;
@@ -5844,7 +5839,7 @@ body.stats-active .content,
         }
 
         .b0x-platform-title {
-            color: #2a5298;
+            color: white;
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 15px;
@@ -7651,22 +7646,22 @@ body.stats-active .content,
                                     </div>
 
                                     <div class="b0x-config-block">
-                    "minerAddress": "0xF2E00a6DbA02eD1115e5BEf3CcD7B5dD47141dDC",
-                    "privateKey": "0xf7a41f2d35af57da25aa46c3e0ac4fd7e83bd900d45851750026d2afe4e10190",</div>
+                    "minerAddress": "0xF2E00a6DbA02eD1115e5BEf3CcD7B5dD47141dDC",<br></br>
+"privateKey": "0xf7a41f2d35af57da25aa46c3e0ac4fd7e83bd900d45851750026d2afe4e10190",</div>
                                     
                                     <div class="b0x-important-note">
                                         ⚠️ <strong>Important:</strong> Replace with your Base Sepolia Blockchain account that has Base ETH in it.  Using this exposed key will result in loss of funds.
                                     </div>
 
-                                    <h3 style="color: #2a5298; margin-top: 25px;">Optional Configuration Parameters:</h3>
+                                    <h3 style="color: white; margin-top: 25px;">Optional Configuration Parameters:</h3>
                                     
                                     <div class="b0x-config-block">
-                    "mintToAddress": ""</div>
+                    "mintToAddress": "",</div>
                                     <p><strong>mintToAddress:</strong> Optional. If you want tokens minted to a different address. Overpayment ETH will also go to this address.</p>
 
                                     <div class="b0x-config-block">
-                    "MaxSolvesperMint": 15,
-                    "MinSolvesperMint": 3,</div>
+                    "MaxSolvesperMint": 15,<br></br>
+"MinSolvesperMint": 3,</div>
                                     <p><strong>MaxSolvesperMint:</strong> Maximum number of solves before submitting a transaction.<br>
                                     <strong>MinSolvesperMint:</strong> Minimum number of solves before submitting (lower is better).</p>
 
@@ -7675,15 +7670,15 @@ body.stats-active .content,
                                     <p><strong>Difficulty_Multiplier:</strong> Work at higher difficulties for more reward per mint. Suggested: 2-5 at start, then 1 after 1000 difficulty.</p>
 
                                     <div class="b0x-config-block">
-                    "minSecondsPerAnswer": 0,
-                    "maxUSDperToken": -0.02055,</div>
+                    "minSecondsPerAnswer": 0,<br></br>
+"maxUSDperToken": -0.02055,</div>
                                     <p><strong>maxUSDperToken:</strong> Maximum USD you plan to spend per B0x token (negative means it costs money to mint - this is normal).</p>
 
-                                    <h3 style="color: #2a5298; margin-top: 25px;">Network Configuration (Verify These Settings):</h3>
+                                    <h3 style="color: white; margin-top: 25px;">Network Configuration (Testnet):</h3>
                                     <div class="b0x-config-block">
-                    "web3api": "https://sepolia.base.org",
-                    "contractAddress": "0x925C42A57328FD8a7b07ecA444A34963e07C8999",
-                    "chainID": 84532</div>
+                    "web3api": "https://sepolia.base.org",<br></br>
+"contractAddress": "0x925C42A57328FD8a7b07ecA444A34963e07C8999",<br></br>
+"chainID": 84532,</div>
                                 </div>
 
                                 <div class="b0x-section">
