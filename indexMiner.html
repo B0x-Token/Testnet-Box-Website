@@ -7569,10 +7569,12 @@ body.stats-active .content,
                 </p>
                 
                 <div style="text-align: center; margin: 2rem 0;">
-                    <a href="#" class="bx-cta-button">Start Mining</a>
-                    <a href="#" class="bx-cta-button">Join Staking</a>
-                    <a href="#" class="bx-cta-button">View Documentation</a>
-                </div>
+                                        
+                    <button class="bx-cta-button" onclick="switchTab('miner')">Start Mining</button>
+                    <button class="bx-cta-button" onclick="switchTab('create')">Join Staking</button>
+
+                    <a href="https://github.com/B0x-Token" class="bx-cta-button" target="_blank">View Documentation</a>
+                 </div>
             </section>
         </main>
 
@@ -21350,6 +21352,7 @@ function updateURL(tabName) {
 
 
     async function switchTab(tabName) {
+
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
@@ -21377,6 +21380,15 @@ function updateURL(tabName) {
             
             updateURL(tabName);
             console.log("PREVIOUS TAB NAME");
+
+
+            if(tabName =='miner'){
+                console.log("Scrooll to top");
+                      setTimeout(() => {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }, 100);
+            }
             if(tabName =='stats' && PreviousTabName !='stats'){
                 switchTab2('stats-home');
                 await GetContractStats();
