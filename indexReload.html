@@ -5032,6 +5032,48 @@ body.stats-active .content,
                 font-size: 2rem;
             }
             
+        .balance55 {
+            font-size:2em;
+    text-align: center;
+            font-weight: bold;
+            color: #27ae60;
+            padding: 8px 15px; /* top/bottom: 8px, left/right: 16px */
+        }
+            .controls55 {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: unset;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 15px 10px;
+            }
+        }
+        .table-container55{
+            padding: 3px;
+        }
+  @media (max-width: 500px) {
+            .header55 h1 {
+                font-size: 1.5rem;
+            }
+        .table-container55{
+            padding: 0px;
+        }
+            
+        .balance55 {
+            font-size:1.3em;
+    text-align: center;
+            font-weight: bold;
+            color: #27ae60;
+            padding: 4px 7px; /* top/bottom: 8px, left/right: 16px */
+        }
             .controls55 {
                 flex-direction: column;
                 align-items: stretch;
@@ -5050,6 +5092,7 @@ body.stats-active .content,
             }
         }
 
+        
 @media (max-width: 768px) {
 #stats .blocks-table .hash2 {
     font-size: 8px;
@@ -21648,7 +21691,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function updateURL(tabName) {
     if(tabName == "staking-main-page"){
-        tabName='stats';
+        tabName='staking';
     }
     if(tabName =="stats-home"){
         tabName='stats';
@@ -21659,7 +21702,11 @@ function updateURL(tabName) {
     if(tabName == "stats-rich-list"){
 
         tabName='rich-list';
-    }
+    }      
+    
+    if(tabName =="staking-main-page"){
+                tabName = 'staking';
+            }
     const baseUrl = window.location.origin + window.location.pathname;
     // Add a valueless parameter
     const newUrl = `${baseUrl}?${tabName}`;
@@ -21674,6 +21721,9 @@ function updateURL(tabName) {
 
     async function switchTab(tabName) {
 
+            if(tabName =="staking"){
+                tabName == "staking-main-page";
+            }
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
@@ -21698,11 +21748,13 @@ function updateURL(tabName) {
     
 
     
-            
+            console.log("tabanem: ",tabName);
             updateURL(tabName);
             console.log("PREVIOUS TAB NAME");
 
-
+            if(tabName =="staking"){
+                tabName == "staking-main-page";
+            }
             if(tabName =='miner'){
                 console.log("Scrooll to top");
                       setTimeout(() => {
@@ -25747,12 +25799,110 @@ adjustTableForScreenSize();
 
         }
 
+        // Function to get responsive styles based on screen width
+function getResponsiveTableStyles() {
+    const width = window.innerWidth;
+    
+    if (width <= 500) {
+        return {
+            rankPadding: '1px 2px',
+            rankFontSize: '0.7em',
+            cellPadding: '2px 3px', 
+            cellFontSize: '0.8em'
+        };
+    } else if (width <= 768) {
+        return {
+            rankPadding: '2px 3px',
+            rankFontSize: '0.9em',
+            cellPadding: '6px 8px',
+            cellFontSize: '1.5em'
+        };
+    } else if (width <= 1000) {
+        return {
+            rankPadding: '3px 4px',
+            rankFontSize: '1em',
+            cellPadding: '8px 10px',
+            cellFontSize: '2em'
+        };
+    } else {
+        return {
+            rankPadding: '3px 4px',
+            rankFontSize: '1em',
+            cellPadding: '12px 16px',
+            cellFontSize: '3em'
+        };
+    }
+}
+
+// Generate table with responsive styles
+function createResponsiveTable() {
+
+    const activeTab = document.querySelector('.nav-tab.active');
+if (activeTab == "stats-staking-rich-list") {
+  console.log('Active tab:', activeTab.textContent.trim());
+
+    const styles = getResponsiveTableStyles();
+    
+
+
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageData = filteredData.slice(start, end);
+
+
+    let tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th style="font-size: ${styles.rankFontSize}; padding: ${styles.rankPadding};">Rank</th>
+                    <th style="font-size: ${styles.cellFontSize}; padding: ${styles.cellPadding};">Address</th>
+                    <th style="font-size: ${styles.cellFontSize}; padding: ${styles.cellPadding};">B0x Staked</th>
+                    <th style="font-size: ${styles.cellFontSize}; padding: ${styles.cellPadding};">0xBTC Staked</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+                        var numspot = 0;
+            pageData.forEach(user => {
+                numspot = numspot + 1;
+                tableHTML += `
+                    <tr>
+                        <td class="rank55">${numspot}</td>
+                        <td><span class="address55" title="${user.address}">${user.address}</span></td>
+                        <td class="balance55">${formatBalance(user.B0xStaked)}</td>
+                        <td class="balance55">${formatNumber(user['0xBTCStaked']/1e8)}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</tbody></table>';
+            document.getElementById('tableContent55').innerHTML = tableHTML;
+
+    var numspot = 0;
+    
+
+        }else{
+            console.log("not in stats-staking-rich-list");
+        }
+}
+
+window.addEventListener('resize', () => {
+    // Regenerate table if needed
+    tableHTML = createResponsiveTable();
+    // Update DOM if table is already rendered
+});
+
+
 // Listen for window resize
 window.addEventListener('resize', adjustTableForScreenSize);
 
 
 // Make table responsive based on screen size
 function adjustTableForScreenSize() {
+    const activeTab = document.querySelector('.nav-tab2.active');
+if (activeTab) {
+    
    const table = document.querySelector('#tableContent55 table');
    const screenWidth = window.innerWidth;
    
@@ -25767,7 +25917,7 @@ function adjustTableForScreenSize() {
                header.style.fontSize = '0.8em';
                header.style.padding = '2px 3px';
            } else {
-               header.style.fontSize = '1.5em';
+               header.style.fontSize = '1em';
                header.style.padding = '8px 10px';
            }
        });
@@ -25804,6 +25954,10 @@ function adjustTableForScreenSize() {
            }
        });
    }
+
+}else{
+    console.log("not in the staking rich list for stats")
+}
 }
 
 
