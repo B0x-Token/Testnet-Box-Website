@@ -1,0 +1,19 @@
+B0x Token is a ERC20 token that was deployed on Ethereum.  It was built as a Version 2 to the 0xBitcoin Token and Contract.  The original 0xBitcoin token mining was forced to stop after a bug was activacted that stopped all future minting, but allows all transfers and everything else to work. So B0x Token is meant to finish the mining of 0xBitcoin for the other 100+ years it had left.  This is an optional upgrade, where you can undo it anytime as long as you hold the original RightsTo0xBitcoin Token, If you hold this token then its possible to redeem it and an equal part of B0x Token for the same part of 0xBitcoin.  So you can use B0x and then return to 0xBitcoin as you please, as long as you hold the two tokens.
+
+
+B0x changed a few things from 0xBitcoin, 2016 blocks per halvening instead of 1024, also 4x up and 4x down on difficulty per adjustment.  We reuse a challenge for 2016 times then get a new one, this allows two or more people to submit at once.  We added emergency difficulty adjustments if the difficulty period takes longer than 7-14 days the difficulty goes down on the next mint.
+
+
+Our contract charges a fee per mint, that is redistributed 50% to miners 50% to LPers over time.  So as the miners mint the token they pay a variable fee depending on the Difficulty of the contract.  The more miners the higher the difficulty the more the miners pay.  Also a demand fee is charged on a per block basis that the mint reward can go down 4x and get charged 4x more in eth if u mint 4x faster than 10 minutes(average block Time). So if u mint in 2.5 minutes its 4x more ETH and 4x less B0x Tokens.
+
+
+Also you recieve a portion of the contracts total back based on the time between the last mint and the current mint.  The longer you take the more you recieve with the max being around 200 minutes.  But it still takes 1-2 years to empty half the ETH from the contract, and as the contract gains more ETH it holds it for longer and longer, sot he contract is gaurenteed if successful to always have funds to pay miners forever! So the contract will always be minted!
+
+
+You mine this token with CPU/GPU/FPGA, it will start at 1 Difficulty where anyone with a CPU/GPU can mint, and the public will decided how fast it goes up!  We have public mining software available for Nvidia and AMD for Windows and Ubuntu! Also CPU!  Join at launch for best change to mint!
+
+
+Also we have a uniswap v4 staking contract that uses a Hook contract to allow us to change the pools swap fee (the fee users pay) to maintain the best/greatest return for our custom staking contract which recieves 50% of the B0x tokens minted and 50% of the ETH sent to miners.
+
+
+The staking contract accepts our custom Uniswap V4 Pool NFTs only.  The dAPP or website is the best place to create them.  It takes B0x Token and 0xBitcoin as the liquidity pair.
