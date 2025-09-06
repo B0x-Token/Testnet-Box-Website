@@ -5258,12 +5258,16 @@
     }
 
     .bx-document-wrapper {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #2c3e50;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
-    }
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
 
     .bx-header-container {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -5298,14 +5302,12 @@
         z-index: 10;
     }
 
-    .bx-section-block {
-        margin-bottom: 3rem;
-        padding: 2rem;
-        border-left: 4px solid #667eea;
-        background: #f8f9fa;
-        border-radius: 0 8px 8px 0;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+   .bx-section-block {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 1rem; /* Add some breathing room */
+}
 
     .bx-section-block:hover {
         transform: translateY(-2px);
@@ -5347,21 +5349,27 @@
         box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
     }
 
-    .bx-feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin: 2rem 0;
-    }
-
-    .bx-feature-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e9ecef;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.bx-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.bx-feature-card {
+    background: white;
+    padding: 1.5rem; /* Reduce from 2rem */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
     .bx-feature-card:hover {
         transform: translateY(-3px);
@@ -5485,7 +5493,7 @@
         }
 
         .bx-section-block {
-            padding: 1.5rem;
+            padding: 0.35rem;
         }
 
         .bx-stats-container {
@@ -6190,6 +6198,19 @@
     /*RELOAD BUTTON ABOVE CSS*/
 
     /*RELOAD BUTTON ABOVE CSS*/
+.bx-text-paragraph {
+    text-align: left;
+    line-height: 1.6;
+}
+
+/* Only justify on wider screens where it looks better */
+@media (min-width: 1024px) {
+    .bx-text-paragraph {
+        text-align: justify;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+}
 </style>
 </head>
 
