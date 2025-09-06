@@ -24281,7 +24281,7 @@
                         let remoteMinedBlocks = [];
                         let remoteLatestBlock = 0;
                         try {
-                            const response = await fetch('https://data.bzerox.org/graph/mined_blocks_testnet.j2son');
+                            const response = await fetch('https://data.bzerox.org/graph/uu_mined_blocks_testnet.json');
                             if (response.ok) {
                                 const remoteData = await response.json();
                                 remoteMinedBlocks = remoteData.mined_blocks;
@@ -24500,7 +24500,7 @@
                     }
 
                     var start_log_search_at = Math.max(ethblockstart + 1, last_imported_mint_block + 1);
-                    last_reward_eth_block = last_reward_eth_block - 2
+                    last_reward_eth_block = last_reward_eth_block
 
                     console.log("searching lastlast_difficulty_start_block", last_difficulty_start_block, "blocks");
                     console.log("searching last_imported_mint_block", last_imported_mint_block, "blocks");
@@ -24513,7 +24513,7 @@
 
                     if (blocks_to_search < 1) {
                         console.log("Only 1 block or less to search abandoning");
-                        return;
+                        
                     }
 
                     var iterations = Math.ceil((blocks_to_search / 500));
@@ -24649,6 +24649,9 @@
                                         previousEpochCount = epochCount;
                                         lastProcessedEpochCount += epochsMined;
 
+
+                                        // One shift to define a challenge change then another for the actual amount mined after the chal change
+
                                         var Challengerz = data3345345.substring(130, 194);
                                         if (previousChallenge != Challengerz) {
                                             var previousChallenge2 = previousChallenge;
@@ -24656,18 +24659,17 @@
                                             previousChallenge = Challengerz;
                                             if (previousChallenge2 !== undefined && previousChallenge2 !== null) {
                                                 var newBlock = [
-                                                    mined_blocks[0] && mined_blocks[0][0] !== undefined ? mined_blocks[0][0] + 1 : block_number + 1,
-                                                    tx_hash,
-                                                    miner_address,
+                                                    mined_blocks[0] && mined_blocks[0][0] !== undefined ? mined_blocks[0][0] : block_number,
+                                                    mined_blocks[0] && mined_blocks[0][1] !== undefined ? mined_blocks[0][1] : tx_hash,
+                                                    mined_blocks[0] && mined_blocks[0][2] !== undefined ? mined_blocks[0][2] : miner_address,
                                                     -1,
-                                                    previousEpochCount
+                                                    mined_blocks[0] && mined_blocks[0][4] !== undefined ? mined_blocks[0][4] : 0
                                                 ];
                                                 mined_blocks.unshift(newBlock);
                                             }
                                         }
-
-                                        // One shift to define a challenge change then another for the actual amount mined after the chal change
                                         mined_blocks.unshift([block_number, tx_hash, miner_address, dataAmt, previousEpochCount]);
+
 
                                         if (dataAmt != 0 && block_number > last_difficulty_start_block) {
                                             total_TOTAL_mint_count_HASH += epochsMined;
@@ -25182,7 +25184,7 @@
                                     + get_date_from_eth_block(eth_block) + '</td><td>'
                                     + '<b>New difficulty period</b>' + '</td><td>'
                                     + '<b>New Challenge</b>'
-                                    + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>PeriodNumberperiod Mints</b></td></tr>';
+                                    + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>'+formattedNumberparzedint+' Mints</b></td></tr>';
                                 totalzkBTCMinted = 0.0;
                             } else {
                                 innerhtml_buffer += '<tr><td align="right" style="text-overflow:ellipsis;white-space: nowrap;overflow: hidden;">'
@@ -26166,8 +26168,11 @@
 
                 // Make table responsive based on screen size
                 function adjustTableForScreenSize() {
+                
                     const activeTab = document.querySelector('.nav-tab2.active');
-                    if (activeTab) {
+                    const activeTab2 =  activeTab?.getAttribute('data-tab')
+                    console.log("active Tab: ", activeTab?.getAttribute('data-tab'));
+                    if (activeTab && activeTab2 == 'stats-staking-rich-list') {
 
                         const table = document.querySelector('#tableContent55 table');
                         const screenWidth = window.innerWidth;
