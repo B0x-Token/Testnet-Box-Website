@@ -7115,7 +7115,7 @@
 
 
 
-                    <button class="btn-primary" id="executeSwapBtn" onclick="executeConvert()">Convert Tokens</button>
+                    <button class="btn-primary" id="executeSwapConvertBtn" onclick="executeConvert()">Convert Tokens</button>
                     <!--   <button class="btn-primary" onclick="getRatioCreatePositiontokenA()">getRatioCreatePositiontokenA Position</button>
                     <button class="btn-primary" onclick="getRatioCreatePositiontokenB()">getRatioCreatePositiontokenB Position</button>
                     <button class="btn-primary" onclick="getMaxCreatePosition()">getMaxCreatePosition Button</button> -->
@@ -8671,11 +8671,6 @@
                 };
 
 
-
-
-
-
-                var inFunctionDontRefresh = false;
 
 
 
@@ -12948,6 +12943,8 @@
                         showSuccessNotification('Approved NFT Transfer!', 'Transaction confirmed on blockchain, now confirm in your wallet the Stake transaction', approveTx.hash)
 
                         inFunctionDontRefresh = false;
+
+                    console.log("inFunctionDontRefresh depositNFT: ",inFunctionDontRefresh);
                         console.log("Approval confirmed!");
                         await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -12969,6 +12966,7 @@
                         console.error("Error approving/staking NFT:", error);
                         enableButton('depositNFTStakeBtn', 'Deposit NFT');
                         inFunctionDontRefresh = false;
+                    console.log("inFunctionDontRefresh depositNFT catch: ",inFunctionDontRefresh);
                     }
 
                 }
@@ -15132,7 +15130,7 @@
 
 
                 async function executeConvert() {
-
+                    disableButtonWithSpinner('executeSwapConvertBtn');
                     await switchToEthereum();
 
                     const fromSelect = document.querySelector('#convert .form-group:nth-child(4) select');
@@ -15154,6 +15152,7 @@
                         depositFromV1toV2();
                     }
 
+                    enableButton('executeSwapConvertBtn');
                     fetchBalancesETH();
                     await switchToBaseSepolia();
                     fetchBalances();
@@ -17261,6 +17260,10 @@
 
 
                         for (let x = 0; x < NumberOfLoops; x++) {
+                            if(ADDRESSTOSEARCHOF != userAddress){
+
+                                return;
+                            }
                             // Calculate startId and endId for high-to-low search
                             const endId = Math.max(startSearchAt - (maxLoopLookups * x), endSearchAt);
                             const startId = Math.max(endId - maxLoopLookups + 1, endSearchAt);
@@ -17382,6 +17385,10 @@
                                         if (decodedInfo.tickUpper == 887220 && decodedInfo.tickLower == -887220) {
                                             console.log("Valid position entering it into positionData");
                                             // Add the new position to positionData
+                            if(ADDRESSTOSEARCHOF != userAddress){
+
+                                return;
+                            }
                                             positionData[idNameID] = {
                                                 id: idNameID,
                                                 pool: poolNamepool,
@@ -17447,6 +17454,10 @@
 
 
 
+                            if(ADDRESSTOSEARCHOF != userAddress){
+
+                                return;
+                            }
 
                         WhereToStartSearch = -1;
                         console.log("Number of tokens user owns that fit criteria for staking:", ownedTokenIds.length);
@@ -19098,9 +19109,32 @@
                     // Convert back to string with proper decimals
                     return ethers.utils.formatUnits(sum, decimals);
                 }
+// Track enabled state for each button ID
+const buttonStates = {};
+
+function isEnabled(id, bool = null) {
+    if (bool !== null) {
+        // Setter: set the state
+        buttonStates[id] = bool;
+        return bool;
+    } else {
+        // Getter: return the state (default to true if not set)
+        return buttonStates[id] !== false;
+    }
+}
+
 
                 function disableButtonWithSpinner(ID, msg = '<span class="spinner"></span> Approve transactions in wallet...') {
+    // Check if already disabled
+    if (!isEnabled(ID)) {
+        console.log(`Button ${ID} is already disabled`);
+        return;
+    }
+    
+    // Set state to disabled
+    isEnabled(ID, false);
                     inFunctionDontRefresh = true;
+                    console.log("inFunctionDontRefresh disableButtonwith Spinner: ",inFunctionDontRefresh);
 
                     const btn = document.getElementById(ID);
                     if (!btn) {
@@ -19128,7 +19162,17 @@
                 }
 
                 function enableButton(ID, originalText = null) {
+
+                      // Check if already enabled
+    if (isEnabled(ID)) {
+        console.log(`Button ${ID} is already enabled`);
+        return;
+    }
+    
+    // Set state to enabled
+    isEnabled(ID, true);
                     inFunctionDontRefresh = false;
+                    console.log("inFunctionDontRefresh enableButton: ",inFunctionDontRefresh);
 
                     const btn = document.getElementById(ID);
                     if (!btn) {
@@ -27207,7 +27251,7 @@ function renderTable() {
 
                 var inFunctionDontRefresh = false;
 
-                let count = 30;
+                let count = 40;
                 let interval;
 
                 let countdownElements = document.querySelectorAll("[id='countdown'], .countdown, [data-countdown]");
@@ -27219,22 +27263,35 @@ function renderTable() {
                         countdownElements.forEach(el => {
                             el.textContent = count;
                         });
+                            console.log("inFunctionDontRefresh: ", inFunctionDontRefresh);
 
                         if (count < 0) {
-                            clearInterval(interval);
+                            console.log("inFunctionDontRefresh: ", inFunctionDontRefresh);
+                            clearInterval(interval); // Always stop the interval at -1
+                            
                             if (!inFunctionDontRefresh) {
                                 runReloadFunctions();
+                                resetCountdown();
+                            } else {
+                                console.log("Starting checker interval - waiting for inFunctionDontRefresh to become false");
+                                // Set up a checker to resume when inFunctionDontRefresh becomes false
+                                const checker = setInterval(() => {
+                                    console.log("Checker running - inFunctionDontRefresh:", inFunctionDontRefresh); // Add this line
+                                    if (!inFunctionDontRefresh) {
+                                        console.log("inFunctionDontRefresh is now false - restarting countdown");
+                                        clearInterval(checker);
+                                        runReloadFunctions();
+                                        resetCountdown();
+                                    }
+                                }, 1000);
                             }
-                            resetCountdown();
-                            // optional: reload page
-                            // location.reload();
                         }
                     }, 1000);
                 }
 
                 function resetCountdown() {
                     clearInterval(interval);
-                    count = 30;
+                    count = 40;
                     // Reset all countdown elements
                     countdownElements.forEach(el => {
                         el.textContent = count;
