@@ -8783,7 +8783,7 @@ body::before {
 
 async function fetchPriceData() {
     const primaryUrl = 'https://data.bzerox.org/graph/price_data_bwork.json';
-    const backupUrl = 'https://b0x-token.github.io/b0x_dapp_updated_data/price_data_bwork.json';
+    const backupUrl = 'https://data.github.bzerox.org/price_data_bwork.json';
     
     try {
         console.log('Fetching price data from primary source...');
@@ -24977,7 +24977,7 @@ function isEnabled(id, bool = null) {
 
 // Primary and backup URLs
 const primaryUrl = 'https://data.bzerox.org/graph/uu_mined_blocks_testnet.json';
-const backupUrl = 'https://b0x-token.github.io/b0x_dapp_updated_data/uu_mined_blocks_testnet.json';
+const backupUrl = 'https://data.github.bzerox.org/uu_mined_blocks_testnet.json';
 
 try {
     console.log('Attempting to fetch from primary source...');
@@ -26693,7 +26693,7 @@ try {
                 // Load data from API// Load data from API with failover
                     async function loadData2() {
                         const primaryUrl = 'https://data.bzerox.org/graph/B0x_Staking_Rich_List_logs_testnet.json';
-                        const backupUrl = 'https://b0x-token.github.io/b0x_dapp_updated_data/B0x_Staking_Rich_List_logs_testnet.json';
+                        const backupUrl = 'https://data.github.bzerox.org/B0x_Staking_Rich_List_logs_testnet.json';
                         
                         try {
                             document.getElementById('tableContent55').innerHTML = '<div class="loading55">Loading staking data...</div>';
@@ -27162,8 +27162,8 @@ try {
                     };
                     
                     const backupUrls = {
-                        base: 'https://b0x-token.github.io/b0x_dapp_updated_data/RichList_B0x_testnet.json',
-                        eth: 'https://b0x-token.github.io/b0x_dapp_updated_data/RichList_B0x_testnet.json' // Will be different when you have separate file
+                        base: 'https://data.github.bzerox.org/RichList_B0x_testnet.json',
+                        eth: 'https://data.github.bzerox.org/RichList_B0x_testnet.json' // Will be different when you have separate file
                     };
 
                     try {
@@ -28114,7 +28114,7 @@ async function fetchDataFromUrl() {
     
     // Define primary and backup URLs
     const primaryUrl = CONFIG.DATA_URL;
-    const backupUrl = CONFIG.DATA_URL.replace('https://data.bzerox.org/graph/', 'https://b0x-token.github.io/b0x_dapp_updated_data/');
+    const backupUrl = CONFIG.DATA_URL.replace('https://data.bzerox.org/graph/', 'https://data.github.bzerox.org/');
     
     // Try primary web source first
     try {
