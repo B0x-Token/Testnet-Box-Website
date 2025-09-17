@@ -22831,6 +22831,7 @@ function isEnabled(id, bool = null) {
                             'increase',
                             'decrease',
                             'staking-main-page',
+                            'staking',
                             'stake-increase',
                             'stake-decrease',
                             'convert',
@@ -22863,6 +22864,9 @@ function isEnabled(id, bool = null) {
                             if (tabName == 'rich-list') {
                                 tabName = 'stats-rich-list';
                                 loadData();
+                            }
+                            if (tabName == 'staking') {
+                                tabName = 'staking-main-page';
                             }
 
                             if (tabName == 'staking-rich-list' || tabName == 'stats-graphs' || tabName == 'stats-mining-calc' || tabName == 'stats-staking-rich-list' || tabName == 'stats-rich-list') {
@@ -22899,6 +22903,7 @@ function isEnabled(id, bool = null) {
                         'staking-main-page',
                         'stake-increase',
                         'stake-decrease',
+                        'staking',
                         'convert',
                         'settings',
                         'staking-management',
@@ -22934,6 +22939,9 @@ function isEnabled(id, bool = null) {
                                 tabname = 'stats-rich-list';
 
                                 loadData();
+                            }                 
+                             if (tabname == 'staking') {
+                                tabname = 'staking-main-page';
                             }
                             if (tabname == 'staking-rich-list' || tabname == 'stats-graphs' || tabname == 'stats-home' || tabname == 'stats-mining-calc' || tabname == 'stats-staking-rich-list' || tabname == 'stats-rich-list') {
 
