@@ -9060,6 +9060,28 @@ async function fetchPriceData() {
                 };
 
 
+
+
+                // Default addresses
+                const defaultRPC_testnet = 'https://sepolia.base.org';
+
+
+
+                // Default addresses
+                const defaultAddresses = '["0x4200000000000000000000000000000000000006", "0x0000000000000000000000000000000000000000"]';
+
+
+                // Store current values in memory
+                let currentSettingsAddresses = {
+                    contractAddresses: defaultAddresses
+                };
+
+
+                
+var defaultDataSource_Testnet = "https://data.bzerox.org/graph/";
+
+
+
                 var graphData, prices, timestamps;
                 async function initializeChart() {
                     console.log("Loading setting: customDataSource: ",customDataSource);
@@ -11643,23 +11665,6 @@ async function fetchPriceData() {
 
 
 
-
-
-                // Default addresses
-                const defaultRPC_testnet = 'https://sepolia.base.org';
-
-
-
-                // Default addresses
-                const defaultAddresses = '["0x4200000000000000000000000000000000000006", "0x0000000000000000000000000000000000000000"]';
-
-
-                // Store current values in memory
-                let currentSettingsAddresses = {
-                    contractAddresses: defaultAddresses
-                };
-
-
                 function saveAddresses() {
                     const addresses = document.getElementById('contractAddresses').value;
                     try {
@@ -11677,7 +11682,7 @@ async function fetchPriceData() {
                     }
                 }
 
-dataSourceSuccess
+
 function saveCustomRPC_Testnet() {
     const customRPC1212 = document.getElementById('customRPC');
 
@@ -11745,7 +11750,10 @@ function saveCustomDataSource_Testnet() {
         alert('Invalid Format for customRPC_Testnet.', error);
     }
 }
-var defaultDataSource_Testnet = "https://data.bzerox.org/graph/";
+
+
+
+
 function restoreDefaultCustomDataSource() {
     document.getElementById('customDataSource').value = defaultDataSource_Testnet;
     customDataSource = defaultDataSource_Testnet;
