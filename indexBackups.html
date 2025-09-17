@@ -608,6 +608,78 @@ body::before {
         min-height: 150px;
     }
 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    .address-config22 .form-group {
+        margin-bottom: 28px;
+    }
+
+    .address-config22 .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+    }
+
+    .address-config22 textarea {
+        width: 100%;
+        height: 120px;
+        /* Set a fixed height */
+        min-height: 120px;
+        /* Minimum height */
+        max-height: 400px;
+        /* Maximum height for resizing */
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        resize: vertical;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-sizing: border-box;
+    }
+
+    /* Alternative: Make it fill the available space */
+    .address-config22 {
+        display: flex;
+        flex-direction: column;
+        min-height: 150px;
+        /* Set minimum container height */
+    }
+
+    .address-config22 .form-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .address-config22 textarea {
+        flex: 1;
+        /* This will make it take up remaining space */
+        min-height: 150px;
+    }
+
+
+
+
+
     input[readonly] {
         background: rgba(255, 255, 255, 0.08) !important;
         color: rgba(255, 255, 255, 0.9) !important;
@@ -6382,6 +6454,50 @@ body::before {
                 text-align: center;
             }
         }
+
+
+        /*rpc setting*/
+        .rpc-textarea {
+    width: 100%;
+    min-width: 200px;
+    min-height: 80px;
+    max-height: 200px;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.rpc-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.rpc-textarea:hover {
+    border-color: #b6c2cf;
+}
+
+/* Auto-expand functionality */
+.rpc-textarea {
+    overflow: hidden;
+    resize: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .rpc-textarea {
+        min-width: 100%;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
 </style>
 </head>
 
@@ -7154,7 +7270,40 @@ body::before {
                     </div>
 
                     <div class="settings-grid">
+             <div class="settings-form address-config22">
+    <h3>🔗 Custom RPC Configuration</h3>
+    <p>Set a custom RPC endpoint URL for blockchain connections. Paste your RPC URL below to configure network connectivity.</p>
+    <p>Find the best public RPCs for Base Sepolia here <a href="https://chainlist.org/chain/84532" style="color: orange">https://chainlist.org/chain/84532</a></p>
+    <div class="form-group">
+        <label>Custom RPC URL</label>
+        <div class="input-group">
+            <textarea id="customRPC" class="rpc-textarea" placeholder="https://sepolia.base.org">https://sepolia.base.org</textarea>
+        </div>
+    </div>
+<div style="display: flex; gap: 10px;">
+    <button class="btn-primary" onclick="saveCustomRPC_Testnet()">Save Custom RPC Testnet</button>
+    <button class="btn-primary" onclick="restoreDefaultRPC()">Restore Default RPC</button>
+</div>
+    <div id="rpcSuccess" class="success-message" style="display: none;">Custom RPC URL saved successfully!</div>
+</div><br></br><br></br>  
 
+
+<div class="settings-form address-config22">
+    <h3> Custom Data Source Configuration</h3>
+    <p>Set a custom data Source endpoint URL for up to date Data. Paste your data URL below to configure.</p>
+    <h2>After saving you must reload page to get new data sources</h2>
+     <div class="form-group">
+        <label>Custom Data Source URL</label>
+        <div class="input-group">
+            <textarea id="customDataSource" class="rpc-textarea" placeholder="https://data.bzerox.org/graph/">https://data.bzerox.org/graph/</textarea>
+        </div>
+    </div>
+<div style="display: flex; gap: 10px;">
+    <button class="btn-primary" onclick="saveCustomDataSource_Testnet()">Save Custom Data Source</button>
+    <button class="btn-primary" onclick="restoreDefaultCustomDataSource()">Restore Default Data Source</button>
+</div>
+    <div id="dataSourceSuccess" class="success-message" style="display: none;">Custom Data Source saved successfully!</div>
+</div><br></br><br></br>
                         <div class="settings-form address-config">
                             <h3>🏦 Staking Rewards Contract Address Configuration</h3>
                             <p>Configure the Reward contract addresses used by the platform. Enter reward addresses in
@@ -7412,7 +7561,7 @@ body::before {
                         <label>Estimated Percentage of Staking Rewards this position is</label>
                         <input type="text" id="estimatedRewards" value="0.00 B0x" readonly style="background: #f8f9fa;">
                     </div>
-
+<h3 style="color: red"> You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.</h3>
                     <button class="btn-success" id="depositNFTStakeBtn" onclick="depositNFTStake()">Deposit
                         NFT</button><br></br><br></br>
 
@@ -8782,7 +8931,8 @@ body::before {
 
 
 async function fetchPriceData() {
-    const primaryUrl = 'https://data.bzerox.org/graph/price_data_bwork.json';
+    console.log("customDataSource customDataSource: ",customDataSource);
+    const primaryUrl = customDataSource +'price_data_bwork.json';
     const backupUrl = 'https://data.github.bzerox.org/price_data_bwork.json';
     
     try {
@@ -8888,10 +9038,19 @@ async function fetchPriceData() {
     }
 }
 
+                var customDataSource = "";
+                // Settings object to hold our values
+                const appSettings = {
+                    minStaking: 0,
+                    minUserHoldings: 0
+                };
 
 
                 var graphData, prices, timestamps;
                 async function initializeChart() {
+                    console.log("Loading setting: customDataSource: ",customDataSource);
+                    await loadSettings();
+                    console.log("AFTER setting: customDataSource: ",customDataSource);
                     // Fetch both price and timestamp data from GitHub
 
                     // Fetch price data from GitHub
@@ -9954,7 +10113,7 @@ async function fetchPriceData() {
                             symbol: 'ETH',
                             decimals: 18
                         },
-                        rpcUrls: ['https://sepolia.base.org'],
+                        rpcUrls: [customRPC],
                         blockExplorerUrls: ['https://sepolia.basescan.org/']
                     };
 
@@ -10009,7 +10168,7 @@ async function fetchPriceData() {
                             symbol: 'ETH',
                             decimals: 18
                         },
-                        rpcUrls: ['https://sepolia.base.org'],
+                        rpcUrls: [customRPC],
                         blockExplorerUrls: ['https://sepolia.basescan.org/']
                     };
 
@@ -11472,6 +11631,10 @@ async function fetchPriceData() {
 
 
 
+                // Default addresses
+                const defaultRPC_testnet = 'https://sepolia.base.org';
+
+
 
                 // Default addresses
                 const defaultAddresses = '["0x4200000000000000000000000000000000000006", "0x0000000000000000000000000000000000000000"]';
@@ -11500,17 +11663,101 @@ async function fetchPriceData() {
                     }
                 }
 
+dataSourceSuccess
+function saveCustomRPC_Testnet() {
+    const customRPC1212 = document.getElementById('customRPC');
+
+    // Fix: Check the correct variable name and get the value
+    if (!customRPC1212 || !customRPC1212.value.trim()) {
+        showAlert('Please enter a valid RPC URL', 'error');
+        return;
+    }
+
+    try {
+        // Fix: Store the VALUE, not the DOM element
+        customRPC = customRPC1212.value.trim();
+        CONFIG.RPC_URL = customRPC1212.value.trim();
+        
+        console.log('customRPC Saved:', customRPC);
+
+        // Fix: Save just the string value, no need for JSON.stringify for simple strings
+        localStorage.setItem('customRPCValue_Testnet', customRPC);
+              showSuccessMessage('rpcSuccess');
+                 
+        if(walletConnected){
+            connect2();
+        }
+    } catch (error) {
+        alert('Invalid Format for customRPC_Testnet.', error);
+    }
+}
+
+function restoreDefaultRPC() {
+    document.getElementById('customRPC').value = defaultRPC_testnet;
+    customRPC = defaultRPC_testnet;
+    
+    console.log('custom RPC restored to defaults and saved');
+    saveCustomRPC_Testnet();
+}
+
+
+
+
+
+ 
+function saveCustomDataSource_Testnet() {
+    const customRPC1212 = document.getElementById('customDataSource');
+
+    // Fix: Check the correct variable name and get the value
+    if (!customRPC1212 || !customRPC1212.value.trim()) {
+        showAlert('Please enter a valid RPC URL', 'error');
+        return;
+    }
+
+    try {
+        // Fix: Store the VALUE, not the DOM element
+        customDataSource = customRPC1212.value.trim();
+       // CONFIG.RPC_URL = customRPC1212.value.trim();
+        
+        console.log('customDataSource Saved:', customDataSource);
+
+        // Fix: Save just the string value, no need for JSON.stringify for simple strings
+        localStorage.setItem('customDataSource_Testnet', customDataSource);
+         showSuccessMessage('dataSourceSuccess'); 
+        if(walletConnected){
+            connect2();
+        }
+    } catch (error) {
+        alert('Invalid Format for customRPC_Testnet.', error);
+    }
+}
+var defaultDataSource_Testnet = "https://data.bzerox.org/graph/";
+function restoreDefaultCustomDataSource() {
+    document.getElementById('customDataSource').value = defaultDataSource_Testnet;
+    customDataSource = defaultDataSource_Testnet;
+    
+    console.log('custom customDataSource restored to defaults and saved');
+    saveCustomDataSource_Testnet();
+}
+
+
+
 
                 function restoreDefaultAddresses() {
                     document.getElementById('contractAddresses').value = defaultAddresses;
                     currentSettingsAddresses.contractAddresses = defaultAddresses;
+                    
                     console.log('Addresses restored to defaults');
 
                 }
 
 
 
+
                 async function restoreDefaultAddressesfromContract() {
+                    if(!walletConnected){
+                        alert('Connect Wallet first');
+                    }
                     try {
                         console.log('Getting reward tokens from contract...');
 
@@ -12164,7 +12411,7 @@ async function fetchPriceData() {
                         name: "Base Sepolia Testnet",
                         explorerUrl: "https://sepolia.basescan.org/address/", // https://sepolia.basescan.org/ for  Base Sepolia testnet
                         chainId: 84532, // Base Seplia Testnet (use 84532 for Base Sepolia testnet)
-                        rpcUrl: "https://sepolia.base.org",
+                        rpcUrl: customRPC,
                         nativeCurrency: {
                             name: "Ethereum",
                             symbol: "ETH",
@@ -12697,13 +12944,6 @@ async function fetchPriceData() {
                 }
 
 
-                // Settings object to hold our values
-                const appSettings = {
-                    minStaking: 0,
-                    minUserHoldings: 0
-                };
-
-
 
 
                 /**
@@ -12765,12 +13005,13 @@ async function fetchPriceData() {
                     showAlert(`Minimum user holdings set to ${value} tokens`, 'success');
                 }
 
-
-
+                var customRPC = "";
                 /**
                  * Loads settings from localStorage and updates the form
                  */
                 function loadSettings() {
+                    const dataSource = localStorage.getItem('customDataSource_Testnet');
+                    const rpc = localStorage.getItem('customRPCValue_Testnet');
                     const savedSettings = localStorage.getItem('stakingSettings');
                     const savedSettingsRewards = localStorage.getItem('stakingRewardAddresses');
                     if (savedSettingsRewards) {
@@ -12802,6 +13043,60 @@ async function fetchPriceData() {
 
                         appSettings.minStaking = 0;
                         appSettings.minUserHoldings = 0;
+                    }
+                    
+                     if (rpc) {
+                        try {
+                            // Since we're storing a simple string, just use it directly
+                            customRPC = rpc;
+                            
+                            // Update the form input
+                            const rpcElement = document.getElementById('customRPC');
+                            if (rpcElement) {
+                                rpcElement.value = customRPC;
+                            }
+                            
+                        } catch (e) {
+                            console.error('Error loading custom RPC settings:', e);
+                            customRPC = defaultRPC_testnet;
+                        }
+                    } else {
+                        customRPC = defaultRPC_testnet;
+                        // Also update the input field with default value
+                        const rpcElement = document.getElementById('customRPC');
+                        if (rpcElement) {
+                            rpcElement.value = defaultRPC_testnet;
+                        }
+                    }
+
+
+                    if(dataSource){
+                        try {
+                            // Since we're storing a simple string, just use it directly
+                            
+                            customDataSource = dataSource;
+                            
+                            // Update the form input
+                            const rpcElement = document.getElementById('customDataSource');
+                            if (rpcElement) {
+                                rpcElement.value = customDataSource;
+                            }
+                            
+                        } catch (e) {
+                            console.error('Error loading custom Data Source settings:', e);
+                            customDataSource = defaultDataSource_Testnet;
+                        }
+                    }else{
+
+
+                            customDataSource = defaultDataSource_Testnet;
+                               // Update the form input
+                            const rpcElement = document.getElementById('customDataSource');
+                            if (rpcElement) {
+                                rpcElement.value = customDataSource;
+                            }
+
+
                     }
                 }
 
@@ -12913,7 +13208,7 @@ async function fetchPriceData() {
                     }
 
                     disableButtonWithSpinner('depositNFTStakeBtn');
-
+                    alert('You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.');
                     // Get position data for unclaimed fees
                     const positionSelect = document.querySelector('#staking-main-page select');
                     const selectedPositionId = positionSelect.value;
@@ -22951,7 +23246,7 @@ function isEnabled(id, bool = null) {
 
                 // Configuration constants
                 const _MAXIMUM_TARGET_STR_OLD = "27606985387162255149739023449108101809804435888681546220650096895197184";  // 2**234
-                const BWORK_RPC = 'https://base-mainnet.g.alchemy.com/v2/u6woRjFLe5-e3SfnCYFnfoTlgVUangV3';
+                const BWORK_RPC = 'https://gateway.tenderly.co/public/base';
                 const BWORK_CONTRACT_ADDRESS = '0x2f38B1a516239739CdCD2C228D1Eb96E29800975';
                 const BWORK_LAST_DIFF_START_BLOCK_INDEX = '4';
                 const BWORK_ERA_INDEX = '5';
@@ -24976,7 +25271,7 @@ function isEnabled(id, bool = null) {
 
 
 // Primary and backup URLs
-const primaryUrl = 'https://data.bzerox.org/graph/uu_mined_blocks_testnet.json';
+const primaryUrl = customDataSource+'uu_mined_blocks_testnet.json';
 const backupUrl = 'https://data.github.bzerox.org/uu_mined_blocks_testnet.json';
 
 try {
@@ -26155,7 +26450,7 @@ try {
                 async function connectTempRPCforStats() {
                     // Create provider from the existing eth instance
 
-                    providerTempStats = new ethers.providers.JsonRpcProvider("https://sepolia.base.org");
+                    providerTempStats = new ethers.providers.JsonRpcProvider(customRPC);
 
                     // Create a random wallet and connect to provider
                     const randomWallet = ethers.Wallet.createRandom();
@@ -26692,7 +26987,7 @@ try {
 
                 // Load data from API// Load data from API with failover
                     async function loadData2() {
-                        const primaryUrl = 'https://data.bzerox.org/graph/B0x_Staking_Rich_List_logs_testnet.json';
+                        const primaryUrl = customDataSource+'B0x_Staking_Rich_List_logs_testnet.json';
                         const backupUrl = 'https://data.github.bzerox.org/B0x_Staking_Rich_List_logs_testnet.json';
                         
                         try {
@@ -27157,8 +27452,8 @@ try {
 
               async function loadData() {
                     const primaryUrls = {
-                        base: 'https://data.bzerox.org/graph/RichList_B0x_testnet.json',
-                        eth: 'https://data.bzerox.org/graph/RichList_B0x_testnet.json' // Will be different when you have separate file
+                        base: customDataSource+'RichList_B0x_testnet.json',
+                        eth: customDataSource+'RichList_B0x_testnet.json' // Will be different when you have separate file
                     };
                     
                     const backupUrls = {
@@ -27896,14 +28191,16 @@ console.log("Search ENDED!!!!");
 
 
 
+console.log("Using customRPC: ",customRPC);
 
+console.log("Using customDataSource: ",customDataSource);
 
 
 
 // Configuration
 const CONFIG = {
-    RPC_URL: "https://sepolia.base.org",
-    DATA_URL: "https://data.bzerox.org/graph/testnet_uniswap_v4_data.json",
+    RPC_URL: customRPC,
+    DATA_URL: customDataSource+ "testnet_uniswap_v4_data.json",
     START_BLOCK: 30489054,
     MAX_LOGS_PER_REQUEST: 499,
     MAX_BLOCKS_PER_REQUEST: 499,
@@ -28114,7 +28411,7 @@ async function fetchDataFromUrl() {
     
     // Define primary and backup URLs
     const primaryUrl = CONFIG.DATA_URL;
-    const backupUrl = CONFIG.DATA_URL.replace('https://data.bzerox.org/graph/', 'https://data.github.bzerox.org/');
+    const backupUrl = CONFIG.DATA_URL.replace(customDataSource, 'https://data.github.bzerox.org/');
     
     // Try primary web source first
     try {
@@ -28630,6 +28927,11 @@ function getCurrentBlock() {
 async function mainRPCStarterForPositions() {
     console.log("Initializing Uniswap V4 Monitor...");
     
+                    await loadSettings();
+                    CONFIG.RPC_URL = customRPC;
+
+                    CONFIG.DATA_URL= customDataSource+ "testnet_uniswap_v4_data.json",
+
     // Fetch existing data first
     await fetchDataFromUrl();
     
