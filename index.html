@@ -332,18 +332,18 @@
         overflow-x: hidden;
     }
 
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(120,119,198,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-        pointer-events: none;
-        z-index: -1;
-    }
-
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'><defs><pattern id='diamond' width='4' height='4' patternUnits='userSpaceOnUse'><path d='M 2 0 L 4 2 L 2 4 L 0 2 Z' fill='none' stroke='rgba(120,119,198,0.15)' stroke-width='0.2'/></pattern></defs><rect width='4' height='4' fill='url(%23diamond)'/></svg>");
+    background-size: 50px 50px; /* <--- This controls how small the diamonds appear */
+    pointer-events: none;
+    z-index: -1;
+}
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -607,6 +607,92 @@
         /* This will make it take up remaining space */
         min-height: 150px;
     }
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    .address-config22 .form-group {
+        margin-bottom: 28px;
+    }
+
+    .address-config22 .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+    }
+
+    .address-config22 textarea {
+        width: 100%;
+        height: 80px;
+        /* Set a fixed height */
+        min-height: 50px;
+        /* Minimum height */
+        max-height: 400px;
+        /* Maximum height for resizing */
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        resize: vertical;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-sizing: border-box;
+    }
+
+    /* Alternative: Make it fill the available space */
+    .address-config22 {
+        display: flex;
+        flex-direction: column;
+        min-height: 150px;
+        /* Set minimum container height */
+    }
+
+    .address-config22 .form-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .address-config22 textarea {
+        flex: 1;
+        /* This will make it take up remaining space */
+        min-height: 80px;
+    }
+
+
+/* Responsive height for smaller screens */
+@media (max-width: 768px) {
+    .address-config22 textarea {
+        height: 1300px; /* Increased height for mobile */
+        min-height: 80px;
+    }
+
+}
+@media (max-width: 480px) {
+    .address-config22 textarea {
+        height: 150px; /* Even more height for very small screens */
+        min-height: 100px;
+    }
+}
+
+
 
     input[readonly] {
         background: rgba(255, 255, 255, 0.08) !important;
@@ -5682,7 +5768,7 @@
     }
 
     .table-rich tr:hover {
-        background-color: #f8f9fa;
+        background-color: black;
     }
 
     .address-rich {
@@ -6382,11 +6468,58 @@
                 text-align: center;
             }
         }
+
+
+        /*rpc setting*/
+        .rpc-textarea {
+    width: 100%;
+    min-width: 200px;
+    min-height: 80px;
+    max-height: 200px;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.rpc-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.rpc-textarea:hover {
+    border-color: #b6c2cf;
+}
+
+/* Auto-expand functionality */
+.rpc-textarea {
+    overflow: hidden;
+    resize: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .rpc-textarea {
+        min-width: 100%;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
 </style>
 </head>
 
 <body>
-
+ <!-- for nft loading auto done now
+    <button class="button1" onclick="getStatsRPC()">GetRPCStatsAfterConnected</button>
+    <button class="button1" onclick="triggerRefresh()">triggerRefresh</button>
+-->
     <!-- Notification Container -->
     <div class="notification-container bottom-right" id="notificationContainer"></div>
 
@@ -7151,7 +7284,40 @@
                     </div>
 
                     <div class="settings-grid">
+             <div class="settings-form address-config22">
+    <h3>🔗 Custom RPC Configuration</h3>
+    <p>Set a custom RPC endpoint URL for blockchain connections. Paste your RPC URL below to configure network connectivity.</p>
+    <p>Find the best public RPCs for Base Sepolia here <a href="https://chainlist.org/chain/84532" style="color: orange">https://chainlist.org/chain/84532</a></p>
+    <div class="form-group">
+        <label>Custom RPC URL</label>
+        <div class="input-group">
+            <textarea id="customRPC" class="rpc-textarea" placeholder="https://sepolia.base.org">https://sepolia.base.org</textarea>
+        </div>
+    </div>
+<div style="display: flex; gap: 10px;">
+    <button class="btn-primary" onclick="saveCustomRPC_Testnet()">Save Custom RPC Testnet</button>
+    <button class="btn-primary" onclick="restoreDefaultRPC()">Restore Default RPC</button>
+</div>
+    <div id="rpcSuccess" class="success-message" style="display: none;">Custom RPC URL saved successfully!</div>
+</div><br></br><br></br>  
 
+
+<div class="settings-form address-config22">
+    <h3> Custom Data Source Configuration</h3>
+    <p>Set a custom data Source endpoint URL for up to date Data. Paste your data URL below to configure.</p>
+    <h2>After saving you must reload page to get new data sources</h2>
+     <div class="form-group">
+        <label>Custom Data Source URL</label>
+        <div class="input-group">
+            <textarea id="customDataSource" class="rpc-textarea" placeholder="https://data.bzerox.org/graph/">https://data.bzerox.org/graph/</textarea>
+        </div>
+    </div>
+<div style="display: flex; gap: 10px;">
+    <button class="btn-primary" onclick="saveCustomDataSource_Testnet()">Save Custom Data Source</button>
+    <button class="btn-primary" onclick="restoreDefaultCustomDataSource()">Restore Default Data Source</button>
+</div>
+    <div id="dataSourceSuccess" class="success-message" style="display: none;">Custom Data Source saved successfully!</div>
+</div><br></br><br></br>
                         <div class="settings-form address-config">
                             <h3>🏦 Staking Rewards Contract Address Configuration</h3>
                             <p>Configure the Reward contract addresses used by the platform. Enter reward addresses in
@@ -7182,6 +7348,7 @@
                                 <span class="toggle-label">Get New Reward Tokens from Contract Automatically</span>
                             </div>
                         </div>
+                        <br></br><br></br>
                         <div class="settings-form">
                             <h3>🔒 Minimum Staking Configuration</h3>
                             <p>Set the minimum amount of tokenA required for users Staked Position. Used to prevent
@@ -7200,6 +7367,7 @@
                                 amount saved successfully!</div>
                         </div>
 
+                        <br></br><br></br>
                         <div class="settings-form">
                             <h3>💰 Minimum User Holdings</h3>
                             <p>Set the minimum tokenA required for user to see a NFT position held in wallet. To prevent
@@ -7409,7 +7577,7 @@
                         <label>Estimated Percentage of Staking Rewards this position is</label>
                         <input type="text" id="estimatedRewards" value="0.00 B0x" readonly style="background: #f8f9fa;">
                     </div>
-
+<h3 style="color: red"> You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days. It is tracked per NFT, so multiple NFTs will have different withdraw Penalities</h3>
                     <button class="btn-success" id="depositNFTStakeBtn" onclick="depositNFTStake()">Deposit
                         NFT</button><br></br><br></br>
 
@@ -8676,12 +8844,10 @@
 
 
 
-
-
                 const UnsiwapV4PoolCreatorAddress = "0x24984FF72AA6bB298Ea7F369E36116F054642697";
                 const USDCToken = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
                 const positionManager_address = "0x4B2C77d209D3405F41a037Ec6c77F7F5b8e2ca80";
-                const contractAddress_PositionFinderPro = '0x3418c003F43FbA5Ce8f69041a49EF7cb4d1d6a58'; // Replace with actual contract address
+                const contractAddress_PositionFinderPro = '0x258404C795E969cFB831166163E064005e5Fa65C'; // Replace with actual contract address
                 const contractAddress_Swapper = '0xc728AF6267315b5CB7669D7DC4F87f5174adabE8'; // Replace with actual contract address
                 const contractAddressLPRewardsStaking = '0x3eA249809f032b1F5AE7B1Dd4986490d05eE2dC2';
                 const hookAddress = '0x794B1409ef4b40a90eC8AF62EaF4c8bf275e5000';
@@ -8780,65 +8946,149 @@
 
 
 
+async function fetchPriceData() {
+    console.log("customDataSource customDataSource: ",customDataSource);
+    const primaryUrl = customDataSource +'price_data_bwork.json';
+    const backupUrl = 'https://data.github.bzerox.org/price_data_bwork.json';
+    
+    try {
+        console.log('Fetching price data from primary source...');
+        const response = await fetch(primaryUrl);
+        
+        if (!response.ok) {
+            throw new Error(`Primary source failed with status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Primary source successful for price data');
+        
+        // Extract the prices array from the JSON structure
+        const prices = data.prices || [];
+        const timestamps = data.timestamps || [];
+        const blocks = data.blocks || [];
+        const lastUpdated = data.last_updated || null;
+        const date = new Date(lastUpdated * 1000);
 
-                async function fetchPriceData() {
-                    try {
-                        const response = await fetch('https://data.bzerox.org/graph/price_data_bwork.json');
-                        const data = await response.json();
+        // Convert from Central Time to local time
+        lastUpdatedString = date.toLocaleString('en-US', {
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // User's local timezone
+        });
 
-                        // Extract the prices array from the JSON structure
-                        const prices = data.prices || [];
-                        const timestamps = data.timestamps || [];
-                        const blocks = data.blocks || [];
-                        const lastUpdated = data.last_updated || null;
-                        const date = new Date(lastUpdated * 1000);
+        // Or if you want to show both Central and Local time:
+        const centralTime = date.toLocaleString('en-US', {
+            timeZone: 'America/Chicago'
+        });
+        const localTime = date.toLocaleString();
 
-                        // Convert from Central Time to local time
-                        lastUpdatedString = date.toLocaleString('en-US', {
-                            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // User's local timezone
-                        });
+        lastUpdatedString = `${localTime} (was ${centralTime} CT)`;
 
-                        // Or if you want to show both Central and Local time:
-                        const centralTime = date.toLocaleString('en-US', {
-                            timeZone: 'America/Chicago'
-                        });
-                        const localTime = date.toLocaleString();
+        console.log(`Last updated: ${lastUpdatedString}`);
+        console.log(`Loaded ${prices.length} price data points`);
 
-                        lastUpdatedString = `${localTime} (was ${centralTime} CT)`;
+        return {
+            prices: prices,
+            timestamps: timestamps,
+            blocks: blocks,
+            lastUpdated: lastUpdatedString
+        };
+
+    } catch (primaryError) {
+        console.warn('⚠️ Primary source failed for price data:', primaryError.message);
+        console.log('🔄 Falling back to GitHub backup for price data...');
+        
+        try {
+            const backupResponse = await fetch(backupUrl);
+            
+            if (!backupResponse.ok) {
+                throw new Error(`Backup source failed with status: ${backupResponse.status}`);
+            }
+            
+            const data = await backupResponse.json();
+            console.log('✅ Backup source successful for price data');
+            
+            // Extract the prices array from the JSON structure
+            const prices = data.prices || [];
+            const timestamps = data.timestamps || [];
+            const blocks = data.blocks || [];
+            const lastUpdated = data.last_updated || null;
+            const date = new Date(lastUpdated * 1000);
+
+            // Convert from Central Time to local time
+            lastUpdatedString = date.toLocaleString('en-US', {
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // User's local timezone
+            });
+
+            // Or if you want to show both Central and Local time:
+            const centralTime = date.toLocaleString('en-US', {
+                timeZone: 'America/Chicago'
+            });
+            const localTime = date.toLocaleString();
+
+            lastUpdatedString = `${localTime} (was ${centralTime} CT) [FROM BACKUP]`;
+
+            console.log(`Last updated: ${lastUpdatedString}`);
+            console.log(`Loaded ${prices.length} price data points from backup`);
+
+            return {
+                prices: prices,
+                timestamps: timestamps,
+                blocks: blocks,
+                lastUpdated: lastUpdatedString
+            };
+
+        } catch (backupError) {
+            console.error('❌ Both primary and backup sources failed for price data!');
+            console.error('Primary error:', primaryError.message);
+            console.error('Backup error:', backupError.message);
+            
+            // Fallback data if both sources fail
+            const fallbackData = {
+                prices: [],
+                timestamps: [],
+                blocks: [],
+                lastUpdated: 'Unable to fetch data - all sources failed'
+            };
+
+            return fallbackData;
+        }
+    }
+}
+
+                var customDataSource = "";
+                // Settings object to hold our values
+                const appSettings = {
+                    minStaking: 0,
+                    minUserHoldings: 0
+                };
 
 
-                        console.log(`Last updated: ${lastUpdatedString}`);
 
 
-                        console.log(`Loaded ${prices.length} price data points`);
-                        console.log(`Last updated: ${lastUpdated ? new Date(lastUpdated * 1000).toLocaleString() : 'Unknown'}`);
+                // Default addresses
+                const defaultRPC_testnet = 'https://sepolia.base.org';
 
-                        return {
-                            prices: prices,
-                            timestamps: timestamps,
-                            blocks: blocks,
-                            lastUpdated: lastUpdatedString
-                        };
 
-                    } catch (error) {
-                        console.error('Error fetching price data:', error);
 
-                        // Fallback data if fetch fails
-                        const fallbackData = {
-                            prices: [],
-                            timestamps: [],
-                            blocks: [],
-                            lastUpdated: null
-                        };
+                // Default addresses
+                const defaultAddresses = '["0x4200000000000000000000000000000000000006", "0x0000000000000000000000000000000000000000"]';
 
-                        return fallbackData;
-                    }
-                }
+
+                // Store current values in memory
+                let currentSettingsAddresses = {
+                    contractAddresses: defaultAddresses
+                };
+
+
+                
+var defaultDataSource_Testnet = "https://data.bzerox.org/graph/";
 
 
 
                 var graphData, prices, timestamps;
                 async function initializeChart() {
+                    console.log("Loading setting: customDataSource: ",customDataSource);
+                    await loadSettings();
+                    console.log("AFTER setting: customDataSource: ",customDataSource);
                     // Fetch both price and timestamp data from GitHub
 
                     // Fetch price data from GitHub
@@ -9318,7 +9568,7 @@
         </div>
         <div class="stat-card">
             <div class="stat-value" id="APYPercentage">0%</div>
-            <div class="stat-label">Current APY</div>
+            <div class="stat-label">Your Current APY</div>
         </div>
     `;
 
@@ -9901,7 +10151,7 @@
                             symbol: 'ETH',
                             decimals: 18
                         },
-                        rpcUrls: ['https://sepolia.base.org'],
+                        rpcUrls: [customRPC],
                         blockExplorerUrls: ['https://sepolia.basescan.org/']
                     };
 
@@ -9956,7 +10206,7 @@
                             symbol: 'ETH',
                             decimals: 18
                         },
-                        rpcUrls: ['https://sepolia.base.org'],
+                        rpcUrls: [customRPC],
                         blockExplorerUrls: ['https://sepolia.basescan.org/']
                     };
 
@@ -11417,19 +11667,6 @@
 
 
 
-
-
-
-                // Default addresses
-                const defaultAddresses = '["0x4200000000000000000000000000000000000006", "0x0000000000000000000000000000000000000000"]';
-
-
-                // Store current values in memory
-                let currentSettingsAddresses = {
-                    contractAddresses: defaultAddresses
-                };
-
-
                 function saveAddresses() {
                     const addresses = document.getElementById('contractAddresses').value;
                     try {
@@ -11448,16 +11685,103 @@
                 }
 
 
+function saveCustomRPC_Testnet() {
+    const customRPC1212 = document.getElementById('customRPC');
+
+    // Fix: Check the correct variable name and get the value
+    if (!customRPC1212 || !customRPC1212.value.trim()) {
+        showAlert('Please enter a valid RPC URL', 'error');
+        return;
+    }
+
+    try {
+        // Fix: Store the VALUE, not the DOM element
+        customRPC = customRPC1212.value.trim();
+        CONFIG.RPC_URL = customRPC1212.value.trim();
+        
+        console.log('customRPC Saved:', customRPC);
+
+        // Fix: Save just the string value, no need for JSON.stringify for simple strings
+        localStorage.setItem('customRPCValue_Testnet', customRPC);
+              showSuccessMessage('rpcSuccess');
+                 
+        if(walletConnected){
+            connect2();
+        }
+    } catch (error) {
+        alert('Invalid Format for customRPC_Testnet.', error);
+    }
+}
+
+function restoreDefaultRPC() {
+    document.getElementById('customRPC').value = defaultRPC_testnet;
+    customRPC = defaultRPC_testnet;
+    
+    console.log('custom RPC restored to defaults and saved');
+    saveCustomRPC_Testnet();
+}
+
+
+
+
+
+ 
+function saveCustomDataSource_Testnet() {
+    const customRPC1212 = document.getElementById('customDataSource');
+
+    // Fix: Check the correct variable name and get the value
+    if (!customRPC1212 || !customRPC1212.value.trim()) {
+        showAlert('Please enter a valid RPC URL', 'error');
+        return;
+    }
+
+    try {
+        // Fix: Store the VALUE, not the DOM element
+        customDataSource = customRPC1212.value.trim();
+       // CONFIG.RPC_URL = customRPC1212.value.trim();
+        
+        console.log('customDataSource Saved:', customDataSource);
+
+        // Fix: Save just the string value, no need for JSON.stringify for simple strings
+        localStorage.setItem('customDataSource_Testnet', customDataSource);
+         showSuccessMessage('dataSourceSuccess'); 
+        if(walletConnected){
+            connect2();
+        }
+    } catch (error) {
+        alert('Invalid Format for customRPC_Testnet.', error);
+    }
+}
+
+
+
+
+function restoreDefaultCustomDataSource() {
+    document.getElementById('customDataSource').value = defaultDataSource_Testnet;
+    customDataSource = defaultDataSource_Testnet;
+    
+    console.log('custom customDataSource restored to defaults and saved');
+    saveCustomDataSource_Testnet();
+}
+
+
+
+
                 function restoreDefaultAddresses() {
                     document.getElementById('contractAddresses').value = defaultAddresses;
                     currentSettingsAddresses.contractAddresses = defaultAddresses;
+                    
                     console.log('Addresses restored to defaults');
 
                 }
 
 
 
+
                 async function restoreDefaultAddressesfromContract() {
+                    if(!walletConnected){
+                        alert('Connect Wallet first');
+                    }
                     try {
                         console.log('Getting reward tokens from contract...');
 
@@ -12111,7 +12435,7 @@
                         name: "Base Sepolia Testnet",
                         explorerUrl: "https://sepolia.basescan.org/address/", // https://sepolia.basescan.org/ for  Base Sepolia testnet
                         chainId: 84532, // Base Seplia Testnet (use 84532 for Base Sepolia testnet)
-                        rpcUrl: "https://sepolia.base.org",
+                        rpcUrl: customRPC,
                         nativeCurrency: {
                             name: "Ethereum",
                             symbol: "ETH",
@@ -12644,13 +12968,6 @@
                 }
 
 
-                // Settings object to hold our values
-                const appSettings = {
-                    minStaking: 0,
-                    minUserHoldings: 0
-                };
-
-
 
 
                 /**
@@ -12712,12 +13029,13 @@
                     showAlert(`Minimum user holdings set to ${value} tokens`, 'success');
                 }
 
-
-
+                var customRPC = "";
                 /**
                  * Loads settings from localStorage and updates the form
                  */
                 function loadSettings() {
+                    const dataSource = localStorage.getItem('customDataSource_Testnet');
+                    const rpc = localStorage.getItem('customRPCValue_Testnet');
                     const savedSettings = localStorage.getItem('stakingSettings');
                     const savedSettingsRewards = localStorage.getItem('stakingRewardAddresses');
                     if (savedSettingsRewards) {
@@ -12749,6 +13067,60 @@
 
                         appSettings.minStaking = 0;
                         appSettings.minUserHoldings = 0;
+                    }
+                    
+                     if (rpc) {
+                        try {
+                            // Since we're storing a simple string, just use it directly
+                            customRPC = rpc;
+                            
+                            // Update the form input
+                            const rpcElement = document.getElementById('customRPC');
+                            if (rpcElement) {
+                                rpcElement.value = customRPC;
+                            }
+                            
+                        } catch (e) {
+                            console.error('Error loading custom RPC settings:', e);
+                            customRPC = defaultRPC_testnet;
+                        }
+                    } else {
+                        customRPC = defaultRPC_testnet;
+                        // Also update the input field with default value
+                        const rpcElement = document.getElementById('customRPC');
+                        if (rpcElement) {
+                            rpcElement.value = defaultRPC_testnet;
+                        }
+                    }
+
+
+                    if(dataSource){
+                        try {
+                            // Since we're storing a simple string, just use it directly
+                            
+                            customDataSource = dataSource;
+                            
+                            // Update the form input
+                            const rpcElement = document.getElementById('customDataSource');
+                            if (rpcElement) {
+                                rpcElement.value = customDataSource;
+                            }
+                            
+                        } catch (e) {
+                            console.error('Error loading custom Data Source settings:', e);
+                            customDataSource = defaultDataSource_Testnet;
+                        }
+                    }else{
+
+
+                            customDataSource = defaultDataSource_Testnet;
+                               // Update the form input
+                            const rpcElement = document.getElementById('customDataSource');
+                            if (rpcElement) {
+                                rpcElement.value = customDataSource;
+                            }
+
+
                     }
                 }
 
@@ -12860,7 +13232,7 @@
                     }
 
                     disableButtonWithSpinner('depositNFTStakeBtn');
-
+                    alert('You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.  It is tracked per NFT, so multiple NFTs will have different withdraw Penalities');
                     // Get position data for unclaimed fees
                     const positionSelect = document.querySelector('#staking-main-page select');
                     const selectedPositionId = positionSelect.value;
@@ -16627,6 +16999,8 @@
                 var WhereToStartSearchStaked = 0;
                 async function getTokenIDsOwnedByUser(ADDRESSTOSEARCHOF) {
 
+                    triggerRefresh();
+                    await sleep(1000);
                     console.log("Calling findUserTokenIds for: ", ADDRESSTOSEARCHOF, " to find all tokens owned by tokenAddress_Rewards aka Staking Contract");
 
                     if (!walletConnected) {
@@ -17176,12 +17550,329 @@
 
 
 
+/*USE OUR THING NOW*/
+
+
+
+/*USE OUR THING NOW*/
+
+
+
+/*USE OUR THING NOW*/
+try{
+
+    const positionFinderABI2 = [
+    {
+        "inputs": [
+            {
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "name": "tokenIds",
+                "type": "uint256[]"
+            },
+            {
+                "name": "Token0",
+                "type": "address"
+            },
+            {
+                "name": "Token1",
+                "type": "address"
+            },
+            {
+                "name": "HookAddress",
+                "type": "address"
+            },
+            {
+                "name": "minTokenA",
+                "type": "uint256"
+            }
+        ],
+        "name": "findUserTokenIdswithMinimumIndividual",
+        "outputs": [
+            {
+                "name": "ownedTokens",
+                "type": "uint256[]"
+            },
+            {
+                "name": "amountTokenA",
+                "type": "uint256[]"
+            },
+            {
+                "name": "amountTokenB",
+                "type": "uint256[]"
+            },
+            {
+                "name": "positionLiquidity",
+                "type": "uint128[]"
+            },
+            {
+                "name": "feesOwedTokenA",
+                "type": "int128[]"
+            },
+            {
+                "name": "feesOwedTokenB",
+                "type": "int128[]"
+            },
+            {
+                "name": "poolKeyz",
+                "type": "tuple[]",
+                "components": [
+                    {
+                        "name": "currency0",
+                        "type": "address"
+                    },
+                    {
+                        "name": "currency1",
+                        "type": "address"
+                    },
+                    {
+                        "name": "fee",
+                        "type": "uint24"
+                    },
+                    {
+                        "name": "tickSpacing",
+                        "type": "int24"
+                    },
+                    {
+                        "name": "hooks",
+                        "type": "address"
+                    }
+                ]
+            },
+            {
+                "name": "poolInfo",
+                "type": "uint256[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
+
+  // temp contract that we used  const contractAddress = "0x258404C795E969cFB831166163E064005e5Fa65C";
+// Now you can use it like this:
+tokenPositionFinderPro2 = new ethers.Contract(
+    contractAddress_PositionFinderPro,
+    positionFinderABI2,
+    signer
+);
+
+
+    while (WeAreSearchingLogsRightNow){
+        console.log("Before sleep:", Date.now());
+await sleep(1000);
+console.log("After sleep:", Date.now());
+        console.log("SearchingLogsRightNowCantUpdateJustYet");
+    }
+
+    
+// Debug version with logging
+const userTokenIds = [];
+console.log(`\nDebugging NFT search for user: ${userAddress}`);
+console.log(`Total NFT owners in dataset: ${Object.keys(nftOwners).length}`);
+
+// Show first few entries for inspection
+const entries = Object.entries(nftOwners).slice(0, 5);
+console.log("Sample nftOwners entries:", entries);
+
+let matchCount = 0;
+for (const [tokenId, owner] of Object.entries(nftOwners)) {
+    // Debug each comparison
+    const ownerLower = owner.toLowerCase();
+    const userLower = userAddress.toLowerCase();
+    
+    if (ownerLower === userLower) {
+        matchCount++;
+        console.log(`✓ Match found: Token ${tokenId} owned by ${owner}`);
+        userTokenIds.push(parseInt(tokenId));
+    }
+}
+
+console.log(`Total matches found: ${matchCount}`);
+console.log(`User tokens array:`, userTokenIds);
+    if (userTokenIds.length === 0) {
+        console.log(`No NFTs found for user ${userAddress}`);
+
+                    await loadPositionsIntoDappSelections();
+
+
+                    hideLoadingWidget();
+
+        return null;
+    }
+    
+    console.log(`Found ${userTokenIds.length} NFTs for user ${userAddress}`);
+    
+    // Initialize result arrays
+    let ownedTokenIds = [];
+    let OWNEDtOKEN1 = [];
+    let OWNEDtOKEN2 = [];
+    let liquidity = [];
+    let feesOwedToken1 = [];
+    let feesOwedToken2 = [];
+    let poolKeyi = [];
+    let poolInfoi = [];
+    
+    // Process in batches of 500
+    const batchSize = 500;
+    for (let i = 0; i < userTokenIds.length; i += batchSize) {
+        const batch = userTokenIds.slice(i, i + batchSize);
+        console.log(`Processing batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(userTokenIds.length/batchSize)} (${batch.length} tokens)`);
+        
+        try {
+            const result = await tokenPositionFinderPro2.findUserTokenIdswithMinimumIndividual(
+                userAddress,
+                batch,
+                CONFIG.TARGET_POOL_KEY.currency0,
+                CONFIG.TARGET_POOL_KEY.currency1,
+                CONFIG.TARGET_POOL_KEY.hooks,
+                0 // minTokenA
+            );
+            
+            if (result) {
+                // Concatenate results
+                ownedTokenIds = result[0].concat(ownedTokenIds);
+                OWNEDtOKEN1 = result[1].concat(OWNEDtOKEN1);
+                OWNEDtOKEN2 = result[2].concat(OWNEDtOKEN2);
+                liquidity = result[3].concat(liquidity);
+                feesOwedToken1 = result[4].concat(feesOwedToken1);
+                feesOwedToken2 = result[5].concat(feesOwedToken2);
+                poolKeyi = result[6].concat(poolKeyi);
+                poolInfoi = result[7].concat(poolInfoi);
+            }
+        } catch(e){
+            console.log("Search error e",e);
+        }
+    }
+        try{
+
+
+                        console.log("Number of tokens user owns that fit criteria for staking:", ownedTokenIds.length);
+                        console.log("NFTs owned by user :", ownedTokenIds.map(id => id.toString()));
+
+                        // Now loop through each token ID to get position details
+                        for (let i = 0; i < ownedTokenIds.length; i++) {
+                            const tokenId = ownedTokenIds[i];
+                            if (tokenId > WhereToStartSearch) {
+                                WhereToSTartSearch = parseInt(tokenId.toString());
+                            }
+                            try {
+                                // Get pool and position info using V4 method with corrected types
+                                // const [poolKey, info2] = await positionManager.getPoolAndPositionInfo(tokenId);
+                                poolKey = poolKeyi[i];
+                                info2 = poolInfoi[i];
+                                console.log(`Token ID ${tokenId.toString()}:`);
+                                console.log(" Pool Key:");
+                                console.log("   Currency0:", poolKey.currency0);     // Now properly typed as address
+                                console.log("   Currency1:", poolKey.currency1);     // Now properly typed as address
+                                console.log("   Fee:", poolKey.fee.toString());
+                                console.log("   Tick Spacing:", poolKey.tickSpacing.toString());
+                                console.log("   Hooks:", poolKey.hooks);             // Now properly typed as address
+                                console.log(" Position Info (packed):", info2.toString());
+
+
+
+                                const decodedInfo = {
+                                    tickLower: TOtickLower(info2.toString()),
+                                    tickUpper: TOtickUpper(info2.toString())
+                                };
+
+                                var feeVariable = (parseInt(poolKey.fee.toString()) / 10000).toFixed(2) + "%";
+                                if ("8388608" == poolKey.fee.toString()) {
+                                    feeVariable = "Dynamic Fee";
+
+                                }
+                                console.log("   Fee:", poolKey.fee.toString());
+                                console.log(" Decoded Position Info:");
+                                console.log("   Tick Lower:", decodedInfo.tickLower);
+                                console.log("   Tick Upper:", decodedInfo.tickUpper);
+                                console.log("   tOKEN 1 AMOUNT:", OWNEDtOKEN1[i].toString(), " address: ", poolKey.currency0);
+                                console.log("   tOKEN 2 AMOUNT:", OWNEDtOKEN2[i].toString(), " address: ", poolKey.currency1);
+                                console.log("   Liquidity:", liquidity[i].toString());
+                                console.log("   FEES OWED Token 1 AMOUNT:", feesOwedToken1[i].toString());
+                                console.log("   FEES OWED Token 2 AMOUNT:", feesOwedToken2[i].toString());
+
+
+                                var tokenASymbol = getSymbolFromAddress(poolKey.currency0);
+                                var tokenBSymbol = getSymbolFromAddress(poolKey.currency1);
+
+                                var tokenAIcon = tokenASymbol ? tokenASymbol[0] : "?"
+                                var tokenBIcon = tokenBSymbol ? tokenBSymbol[0] : "?"
+
+                                console.log("   Token A Symbol :", tokenASymbol);
+                                console.log("   Token B Symbol :", tokenBSymbol);
+                                console.log("   tokenAIcon:", tokenAIcon);
+
+                                console.log("   tokenBIcon:", tokenBIcon);
+
+                                var poolNamepool = tokenASymbol + "/" + tokenBSymbol;
+                                console.log("   pool:", poolNamepool);
+                                var idNameID = `position_` + tokenId.toString();
+                                console.log("   id:", idNameID);
+
+                                var decimalsTokenA = tokenAddressesDecimals[tokenASymbol];
+                                var decimalsTokenB = tokenAddressesDecimals[tokenBSymbol];
+
+                                console.log("   decimalsTokenA:", decimalsTokenA);
+                                console.log("   decimalsTokenB:", decimalsTokenB);
+                                var formattedToken1 = ethers.utils.formatUnits(OWNEDtOKEN1[i], decimalsTokenA);
+                                var formattedToken2 = ethers.utils.formatUnits(OWNEDtOKEN2[i], decimalsTokenB);
+                                console.log("   formattedToken1:", formattedToken1);
+                                console.log("   formattedToken2:", formattedToken2);
+                                var formattedToken1FEESOWED = ethers.utils.formatUnits(feesOwedToken1[i], decimalsTokenA);
+                                var formattedToken2FEESOWED = ethers.utils.formatUnits(feesOwedToken2[i], decimalsTokenB);
+                                console.log("   ")
+
+
+                                if (decodedInfo.tickUpper == 887220 && decodedInfo.tickLower == -887220) {
+                                    console.log("Valid position entering it into positionData");
+                                    // Add the new position to positionData
+                                    positionData[idNameID] = {
+                                        id: idNameID,
+                                        pool: poolNamepool,
+                                        feeTier: feeVariable,
+                                        tokenA: tokenASymbol,
+                                        tokenB: tokenBSymbol,
+                                        currentLiquidity: parseFloat(liquidity[i].toString()),
+                                        currentTokenA: formattedToken1,
+                                        currentTokenB: formattedToken2,
+                                        unclaimedFeesTokenA: formattedToken1FEESOWED,
+                                        unclaimedFeesTokenB: formattedToken2FEESOWED,
+                                        tokenAIcon: tokenAIcon,
+                                        tokenBIcon: tokenBIcon
+                                    };
+                                } else {
+                                    console.log("Ticks outside of acceptable range for staking not included is this ID in our interface, sorry it doesnt work");
+                                }
+
+
+                            } catch (positionError) {
+                                console.error(`Error getting position details for token ${tokenId}:`, positionError);
+                            }
+
+                        }
+                    
+                    }catch(e){
+                        console.log("Error E: ",e);
+                    }
+                 }catch(e){
+                        console.log("Error E: ",e);
+                    }
+            
+            
+
+/*USE OUR THING NOW*/
+
 
 
 
                     console.log("getting getMaxUniswapIDPossible!");
                     var MAXTOKENPOSSIBLE = 0;
                     var maxTokenPossible = 0;
+
+                    /*
                     try {
 
 
@@ -17238,8 +17929,8 @@
                     }
 
 
-
-
+            */
+/*
                     try {
                         const maxLoopLookups = 30;
                         console.log("THIS333: WhereToStartSearch", WhereToStartSearch);
@@ -17589,7 +18280,7 @@
 
 
 
-
+*/
 
 
 
@@ -17602,7 +18293,7 @@
                     hideLoadingWidget();
                     console.log("Called loadPositionsIntoDappSelections after getTokenIDsOwnedByUser");
 
-                }
+}
 
 
 
@@ -22142,6 +22833,7 @@ function isEnabled(id, bool = null) {
                             'increase',
                             'decrease',
                             'staking-main-page',
+                            'staking',
                             'stake-increase',
                             'stake-decrease',
                             'convert',
@@ -22174,6 +22866,9 @@ function isEnabled(id, bool = null) {
                             if (tabName == 'rich-list') {
                                 tabName = 'stats-rich-list';
                                 loadData();
+                            }
+                            if (tabName == 'staking') {
+                                tabName = 'staking-main-page';
                             }
 
                             if (tabName == 'staking-rich-list' || tabName == 'stats-graphs' || tabName == 'stats-mining-calc' || tabName == 'stats-staking-rich-list' || tabName == 'stats-rich-list') {
@@ -22210,6 +22905,7 @@ function isEnabled(id, bool = null) {
                         'staking-main-page',
                         'stake-increase',
                         'stake-decrease',
+                        'staking',
                         'convert',
                         'settings',
                         'staking-management',
@@ -22245,6 +22941,9 @@ function isEnabled(id, bool = null) {
                                 tabname = 'stats-rich-list';
 
                                 loadData();
+                            }                 
+                             if (tabname == 'staking') {
+                                tabname = 'staking-main-page';
                             }
                             if (tabname == 'staking-rich-list' || tabname == 'stats-graphs' || tabname == 'stats-home' || tabname == 'stats-mining-calc' || tabname == 'stats-staking-rich-list' || tabname == 'stats-rich-list') {
 
@@ -22579,7 +23278,7 @@ function isEnabled(id, bool = null) {
 
                 // Configuration constants
                 const _MAXIMUM_TARGET_STR_OLD = "27606985387162255149739023449108101809804435888681546220650096895197184";  // 2**234
-                const BWORK_RPC = 'https://base-mainnet.g.alchemy.com/v2/u6woRjFLe5-e3SfnCYFnfoTlgVUangV3';
+                const BWORK_RPC = 'https://gateway.tenderly.co/public/base';
                 const BWORK_CONTRACT_ADDRESS = '0x2f38B1a516239739CdCD2C228D1Eb96E29800975';
                 const BWORK_LAST_DIFF_START_BLOCK_INDEX = '4';
                 const BWORK_ERA_INDEX = '5';
@@ -24596,22 +25295,68 @@ function isEnabled(id, bool = null) {
                         // Fetch remote data
                         let remoteMinedBlocks = [];
                         let remoteLatestBlock = 0;
-                        try {
-                            const response = await fetch('https://data.bzerox.org/graph/uu_mined_blocks_testnet.json');
-                            if (response.ok) {
-                                const remoteData = await response.json();
-                                remoteMinedBlocks = remoteData.mined_blocks;
-                                remoteLatestBlock = remoteData.latest_block_number
-                                console.log('Remote data has', remoteMinedBlocks.length, 'blocks, latest:', remoteLatestBlock);
 
-                                // Update previousChallenge if available in remote data
-                                if (remoteData.previous_challenge) {
-                                    previousChallenge = remoteData.previous_challenge;
-                                }
-                            }
-                        } catch (fetchError) {
-                            console.log('Error fetching remote data:', fetchError.message);
-                        }
+
+
+
+
+
+
+// Primary and backup URLs
+const primaryUrl = customDataSource+'uu_mined_blocks_testnet.json';
+const backupUrl = 'https://data.github.bzerox.org/uu_mined_blocks_testnet.json';
+
+try {
+    console.log('Attempting to fetch from primary source...');
+    const response = await fetch(primaryUrl);
+    
+    if (response.ok) {
+        const remoteData = await response.json();
+        remoteMinedBlocks = remoteData.mined_blocks;
+        remoteLatestBlock = remoteData.latest_block_number;
+        console.log('✅ Primary source: Remote data has', remoteMinedBlocks.length, 'blocks, latest:', remoteLatestBlock);
+
+        // Update previousChallenge if available in remote data
+        if (remoteData.previous_challenge) {
+            previousChallenge = remoteData.previous_challenge;
+        }
+    } else {
+        throw new Error(`Primary source failed with status: ${response.status}`);
+    }
+} catch (primaryError) {
+    console.warn('⚠️ Primary source failed:', primaryError.message);
+    console.log('🔄 Falling back to GitHub backup...');
+    
+    try {
+        const backupResponse = await fetch(backupUrl);
+        
+        if (backupResponse.ok) {
+            const remoteData = await backupResponse.json();
+            remoteMinedBlocks = remoteData.mined_blocks;
+            remoteLatestBlock = remoteData.latest_block_number;
+            console.log('✅ Backup source: Remote data has', remoteMinedBlocks.length, 'blocks, latest:', remoteLatestBlock);
+
+            // Update previousChallenge if available in remote data
+            if (remoteData.previous_challenge) {
+                previousChallenge = remoteData.previous_challenge;
+            }
+        } else {
+            throw new Error(`Backup source failed with status: ${backupResponse.status}`);
+        }
+    } catch (backupError) {
+        console.error('❌ Both primary and backup sources failed!');
+        console.error('Primary error:', primaryError.message);
+        console.error('Backup error:', backupError.message);
+        
+        // Handle the case when both sources fail
+        // You might want to use cached data or show an error message
+        throw new Error('All data sources unavailable');
+    }
+}
+
+
+
+
 
                         // Compare and choose the best dataset
                         if (remoteLatestBlock > localLatestBlock) {
@@ -25737,7 +26482,7 @@ function isEnabled(id, bool = null) {
                 async function connectTempRPCforStats() {
                     // Create provider from the existing eth instance
 
-                    providerTempStats = new ethers.providers.JsonRpcProvider("https://sepolia.base.org");
+                    providerTempStats = new ethers.providers.JsonRpcProvider(customRPC);
 
                     // Create a random wallet and connect to provider
                     const randomWallet = ethers.Wallet.createRandom();
@@ -26272,39 +27017,88 @@ function isEnabled(id, bool = null) {
                     return `${address.slice(0, 6)}...${address.slice(-4)}`;
                 }
 
-                // Load data from API
-                async function loadData2() {
-                    try {
-                        document.getElementById('tableContent55').innerHTML = '<div class="loading55">Loading staking data...</div>';
+                // Load data from API// Load data from API with failover
+                    async function loadData2() {
+                        const primaryUrl = customDataSource+'B0x_Staking_Rich_List_logs_testnet.json';
+                        const backupUrl = 'https://data.github.bzerox.org/B0x_Staking_Rich_List_logs_testnet.json';
+                        
+                        try {
+                            document.getElementById('tableContent55').innerHTML = '<div class="loading55">Loading staking data...</div>';
 
-                        const response = await fetch('https://data.bzerox.org/graph/B0x_Staking_Rich_List_logs_testnet.json');
+                            console.log('Fetching staking data from primary source...');
+                            const response = await fetch(primaryUrl);
 
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
+                            if (!response.ok) {
+                                throw new Error(`Primary source failed with status: ${response.status}`);
+                            }
+
+                            stakingData = await response.json();
+                            console.log('✅ Primary source successful for staking data');
+
+                            // Update stats
+                            updateStats55();
+
+                            // Convert users object to array for easier handling
+                            filteredData = Object.entries(stakingData.users).map(([address, data]) => ({
+                                address,
+                                ...data
+                            }));
+
+                            // Initial render
+                            currentPage = 1;
+                            renderTable2();
+                            renderPagination2();
+
+                        } catch (primaryError) {
+                            console.warn('⚠️ Primary source failed for staking data:', primaryError.message);
+                            console.log('🔄 Falling back to GitHub backup for staking data...');
+                            
+                            try {
+                                document.getElementById('tableContent55').innerHTML = '<div class="loading55">Loading staking data from backup...</div>';
+                                
+                                const backupResponse = await fetch(backupUrl);
+
+                                if (!backupResponse.ok) {
+                                    throw new Error(`Backup source failed with status: ${backupResponse.status}`);
+                                }
+
+                                stakingData = await backupResponse.json();
+                                console.log('✅ Backup source successful for staking data');
+
+                                // Update stats
+                                updateStats55();
+
+                                // Convert users object to array for easier handling
+                                filteredData = Object.entries(stakingData.users).map(([address, data]) => ({
+                                    address,
+                                    ...data
+                                }));
+
+                                // Initial render
+                                currentPage = 1;
+                                renderTable2();
+                                renderPagination2();
+
+                                // Optional: Show user that backup data is being used
+                                const tableHeader = document.querySelector('#tableContent55');
+                                if (tableHeader) {
+                                    const backupNotice = document.createElement('div');
+                                    backupNotice.className = 'backup-notice';
+                                    backupNotice.style.cssText = 'background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 8px; margin-bottom: 10px; border-radius: 4px; font-size: 12px;';
+                                    backupNotice.innerHTML = '⚠️ Using backup data source - some data may be slightly delayed';
+                                    tableHeader.insertBefore(backupNotice, tableHeader.firstChild);
+                                }
+
+                            } catch (backupError) {
+                                console.error('❌ Both primary and backup sources failed for staking data!');
+                                console.error('Primary error:', primaryError.message);
+                                console.error('Backup error:', backupError.message);
+                                
+                                document.getElementById('tableContent55').innerHTML = 
+                                    '<div class="error">Failed to load data from all sources. Please check your connection and try again.</div>';
+                            }
                         }
-
-                        stakingData = await response.json();
-
-                        // Update stats
-                        updateStats55();
-
-                        // Convert users object to array for easier handling
-                        filteredData = Object.entries(stakingData.users).map(([address, data]) => ({
-                            address,
-                            ...data
-                        }));
-
-                        // Initial render
-                        currentPage = 1;
-                        renderTable2();
-                        renderPagination2();
-
-                    } catch (error) {
-                        console.error('Error loading data:', error);
-                        document.getElementById('tableContent55').innerHTML =
-                            '<div class="error">Failed to load data. Please check your connection and try again.</div>';
                     }
-                }
 
                 // Update statistics
                 function updateStats55() {
@@ -26688,33 +27482,89 @@ function isEnabled(id, bool = null) {
                 let pageSize2 = 25;
                 let currentSort = 'b0x';
 
-                async function loadData() {
+              async function loadData() {
+                    const primaryUrls = {
+                        base: customDataSource+'RichList_B0x_testnet.json',
+                        eth: customDataSource+'RichList_B0x_testnet.json' // Will be different when you have separate file
+                    };
+                    
+                    const backupUrls = {
+                        base: 'https://data.github.bzerox.org/RichList_B0x_testnet.json',
+                        eth: 'https://data.github.bzerox.org/RichList_B0x_testnet.json' // Will be different when you have separate file
+                    };
+
                     try {
                         console.log("Load data called");
                         document.getElementById('tableContent').innerHTML = '<div class="loading-rich">Loading rich list data...</div>';
 
-                        // Fetch both datasets
+                        console.log('Fetching rich list data from primary sources...');
+                        
+                        // Try primary sources first
                         const [baseResponse, ethResponse] = await Promise.all([
-                            fetch('https://data.bzerox.org/graph/RichList_B0x_testnet.json'),
-                            // fetch('https://data.bzerox.org/graph/RichList_B0x_testnet_eth.json')
-                            fetch('https://data.bzerox.org/graph/RichList_B0x_testnet.json')
+                            fetch(primaryUrls.base),
+                            fetch(primaryUrls.eth)
                         ]);
 
                         if (!baseResponse.ok || !ethResponse.ok) {
-                            throw new Error('Failed to fetch data');
+                            throw new Error(`Primary sources failed - Base: ${baseResponse.status}, ETH: ${ethResponse.status}`);
                         }
 
                         baseData = await baseResponse.json();
                         ethData = await ethResponse.json();
+                        
+                        console.log('✅ Primary sources successful for rich list data');
 
                         combineData();
                         updateStats();
                         renderTable();
-                    } catch (error) {
-                        console.error('Error loading data:', error);
-                        document.getElementById('tableContent').innerHTML = '<div class="error-rich">Error loading data. Please try again.</div>';
+
+                    } catch (primaryError) {
+                        console.warn('⚠️ Primary sources failed for rich list data:', primaryError.message);
+                        console.log('🔄 Falling back to GitHub backup for rich list data...');
+                        
+                        try {
+                            document.getElementById('tableContent').innerHTML = '<div class="loading-rich">Loading rich list data from backup...</div>';
+                            
+                            // Try backup sources
+                            const [baseBackupResponse, ethBackupResponse] = await Promise.all([
+                                fetch(backupUrls.base),
+                                fetch(backupUrls.eth)
+                            ]);
+
+                            if (!baseBackupResponse.ok || !ethBackupResponse.ok) {
+                                throw new Error(`Backup sources failed - Base: ${baseBackupResponse.status}, ETH: ${ethBackupResponse.status}`);
+                            }
+
+                            baseData = await baseBackupResponse.json();
+                            ethData = await ethBackupResponse.json();
+                            
+                            console.log('✅ Backup sources successful for rich list data');
+
+                            combineData();
+                            updateStats();
+                            renderTable();
+
+                            // Optional: Show user that backup data is being used
+                            const tableContainer = document.querySelector('#tableContent');
+                            if (tableContainer) {
+                                const backupNotice = document.createElement('div');
+                                backupNotice.className = 'backup-notice-rich';
+                                backupNotice.style.cssText = 'background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 8px; margin-bottom: 10px; border-radius: 4px; font-size: 12px;';
+                                backupNotice.innerHTML = '⚠️ Using backup data source - data may be slightly delayed';
+                                tableContainer.insertBefore(backupNotice, tableContainer.firstChild);
+                            }
+
+                        } catch (backupError) {
+                            console.error('❌ Both primary and backup sources failed for rich list data!');
+                            console.error('Primary error:', primaryError.message);
+                            console.error('Backup error:', backupError.message);
+                            
+                            document.getElementById('tableContent').innerHTML = '<div class="error-rich">Error loading data from all sources. Please try again.</div>';
+                        }
                     }
                 }
+
+
                 var rankETHb0x = 0;
                 var rankBaseb0x = 0;
                 function combineData() {
@@ -27337,6 +28187,811 @@ function renderTable() {
 
 
 
+
+
+async function getStatsRPC(){
+
+
+
+console.log("Search started");
+
+await mainRPCStarterForPositions();
+
+
+
+
+
+console.log("Search ENDED!!!!");
+
+
+
+
+
+
+
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+console.log("Using customRPC: ",customRPC);
+
+console.log("Using customDataSource: ",customDataSource);
+
+
+
+// Configuration
+const CONFIG = {
+    RPC_URL: customRPC,
+    DATA_URL: customDataSource+ "testnet_uniswap_v4_data.json",
+    START_BLOCK: 30489054,
+    MAX_LOGS_PER_REQUEST: 499,
+    MAX_BLOCKS_PER_REQUEST: 499,
+    MAX_RETRIES: 5,
+    BASE_RETRY_DELAY: 1000,
+    MAX_RETRY_DELAY: 60000,
+    RATE_LIMIT_DELAY: 1250,
+    
+    // Contract addresses
+    POSITION_MANAGER_ADDRESS: "0xc728AF6267315b5CB7669D7DC4F87f5174adabE8",
+    NFT_ADDRESS: "0x4B2C77d209D3405F41a037Ec6c77F7F5b8e2ca80",
+    
+    // Event signatures
+    CREATE_POSITION_TOPIC: "0x97c3f5c9077358c7266488de6a3ebba41df38417797d90b665239fcb506c840a",
+    TRANSFER_TOPIC: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    
+    // Target pool key
+    TARGET_POOL_KEY: {
+        currency0: "0x4b20b6e9b678b111Dcc365EaD92b3277B178FB74",
+        currency1: "0xb379A851AC41bcDF0c2564b88916B10E5A08daAe",
+        fee: 8388608,
+        tickSpacing: 60,
+        hooks: "0x794B1409ef4b40a90eC8AF62EaF4c8bf275e5000"
+    }
+};
+
+// Global state
+let currentBlockzzzz = CONFIG.START_BLOCK;
+let validPositions = [];
+let invalidPositions = [];
+let nftOwners = {}; // tokenId -> owner
+let isRunning = false;
+
+// Utility functions
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function exponentialBackoffDelay(attempt) {
+    const delay = Math.min(CONFIG.BASE_RETRY_DELAY * Math.pow(2, attempt), CONFIG.MAX_RETRY_DELAY);
+    const jitter = delay * 0.1 * Math.random();
+    return delay + jitter;
+}
+
+function poolKeyMatches(poolKey, target) {
+    return poolKey.currency0.toLowerCase() === target.currency0.toLowerCase() &&
+           poolKey.currency1.toLowerCase() === target.currency1.toLowerCase() &&
+           poolKey.fee === target.fee &&
+           poolKey.tickSpacing === target.tickSpacing &&
+           poolKey.hooks.toLowerCase() === target.hooks.toLowerCase();
+}
+
+// Network functions
+async function retryWithBackoff(func, ...args) {
+    let lastError;
+    
+    for (let attempt = 0; attempt < CONFIG.MAX_RETRIES; attempt++) {
+        try {
+            return await func(...args);
+        } catch (error) {
+            lastError = error;
+            if (attempt === CONFIG.MAX_RETRIES - 1) break;
+            
+            const delay = exponentialBackoffDelay(attempt);
+            console.log(`Attempt ${attempt + 1} failed: ${error.message.substring(0, 100)}...`);
+            console.log(`Retrying in ${(delay / 1000).toFixed(2)} seconds...`);
+            await sleep(delay);
+        }
+    }
+    
+    console.log(`All ${CONFIG.MAX_RETRIES} attempts failed. Last error: ${lastError.message}`);
+    throw lastError;
+}
+
+async function makeRpcCall(method, params) {
+    const payload = {
+        jsonrpc: "2.0",
+        method: method,
+        params: params,
+        id: Date.now()
+    };
+    
+    await sleep(CONFIG.RATE_LIMIT_DELAY);
+    const response = await fetch(CONFIG.RPC_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    
+    if (result.error) {
+        const errorMsg = typeof result.error === 'object' ? 
+            result.error.message || JSON.stringify(result.error) : 
+            result.error;
+        throw new Error(`RPC Error: ${errorMsg}`);
+    }
+    
+    return result.result;
+}
+
+async function getLogs(fromBlock, toBlock, topics, address) {
+    try {
+        return await retryWithBackoff(async () => {
+            return await makeRpcCall('eth_getLogs', [{
+                fromBlock: `0x${fromBlock.toString(16)}`,
+                toBlock: `0x${toBlock.toString(16)}`,
+                address: address,
+                topics: topics
+            }]);
+        });
+    } catch (error) {
+        console.log(`Failed to get logs after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`);
+        return [];
+    }
+}
+
+async function callContract(address, data, block = "latest") {
+    try {
+        return await retryWithBackoff(async () => {
+            return await makeRpcCall('eth_call', [{
+                to: address,
+                data: data
+            }, block]);
+        });
+    } catch (error) {
+        console.log(`Failed to call contract after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`);
+        return null;
+    }
+}
+
+async function getLatestBlock() {
+    try {
+        return await retryWithBackoff(async () => {
+            const result = await makeRpcCall('eth_blockNumber', []);
+            return parseInt(result, 16);
+        });
+    } catch (error) {
+        console.log(`Failed to get latest block after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`);
+        return currentBlockzzzz;
+    }
+}
+// Add to global state
+let localStorageKey = 'testnet_uniswap_v4_local_data';
+
+
+// Save data to localStorage
+function saveDataLocally() {
+    try {
+        const data = {
+            metadata: {
+                last_updated: new Date().toISOString(),
+                current_block: currentBlockzzzz,
+                start_block: CONFIG.START_BLOCK,
+                total_valid_positions: validPositions.length,
+                total_nft_owners: Object.keys(nftOwners).length
+            },
+            valid_positions: validPositions.map(pos => ({
+                token_id: pos.tokenId,
+                pool_key: pos.poolKey,
+                owner: pos.owner,
+                block_number: pos.blockNumber,
+                tx_hash: pos.txHash,
+                timestamp: pos.timestamp
+            })),
+            nft_owners: nftOwners
+        };
+        
+        localStorage.setItem(localStorageKey, JSON.stringify(data));
+        console.log(`✓ Saved local data at block ${currentBlockzzzz}`);
+    } catch (error) {
+        console.log(`Failed to save local data: ${error.message}`);
+    }
+}
+
+// Load data from localStorage
+function loadDataLocally() {
+    try {
+        const stored = localStorage.getItem(localStorageKey);
+        if (!stored) {
+            console.log('No local data found');
+            return null;
+        }
+        
+        const data = JSON.parse(stored);
+        const metadata = data.metadata || {};
+        const localCurrentBlock = metadata.current_block || CONFIG.START_BLOCK;
+        
+        console.log(`Found local data at block ${localCurrentBlock}`);
+        return { data, localCurrentBlock };
+    } catch (error) {
+        console.log(`Failed to load local data: ${error.message}`);
+        return null;
+    }
+}
+
+// Modified fetchDataFromUrl to compare local vs web// Modified fetchDataFromUrl to compare local vs web with GitHub backup
+async function fetchDataFromUrl() {
+    // First check local data
+    const localData = loadDataLocally();
+    let localCurrentBlock = localData ? localData.localCurrentBlock : 0;
+    
+    // Define primary and backup URLs
+    const primaryUrl = CONFIG.DATA_URL;
+    const backupUrl = CONFIG.DATA_URL.replace(customDataSource, 'https://data.github.bzerox.org/');
+    
+    // Try primary web source first
+    try {
+        console.log(`Fetching web data from primary source: ${primaryUrl}...`);
+        const response = await fetch(primaryUrl);
+        
+        if (!response.ok) {
+            throw new Error(`Primary source HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const webData = await response.json();
+        const metadata = webData.metadata || {};
+        const webCurrentBlock = metadata.current_block || CONFIG.START_BLOCK;
+        
+        console.log(`✅ Primary source: Local block: ${localCurrentBlock}, Web block: ${webCurrentBlock}`);
+        
+        // Use whichever is more current
+        if (webCurrentBlock > localCurrentBlock && webCurrentBlock > currentBlockzzzz) {
+            console.log('Using primary web data (most current)');
+            loadDataFromSource(webData, webCurrentBlock);
+            return true;
+        } else if (localCurrentBlock > currentBlockzzzz) {
+            console.log('Using local data (most current)');
+            loadDataFromSource(localData.data, localCurrentBlock);
+            return true;
+        } else {
+            console.log(`Already at current block ${currentBlockzzzz}`);
+            return false;
+        }
+        
+    } catch (primaryError) {
+        console.warn(`⚠️ Primary source failed: ${primaryError.message}`);
+        console.log(`🔄 Falling back to GitHub backup: ${backupUrl}...`);
+        
+        // Try backup web source
+        try {
+            const backupResponse = await fetch(backupUrl);
+            
+            if (!backupResponse.ok) {
+                throw new Error(`Backup source HTTP ${backupResponse.status}: ${backupResponse.statusText}`);
+            }
+            
+            const webData = await backupResponse.json();
+            const metadata = webData.metadata || {};
+            const webCurrentBlock = metadata.current_block || CONFIG.START_BLOCK;
+            
+            console.log(`✅ Backup source: Local block: ${localCurrentBlock}, Web block: ${webCurrentBlock}`);
+            
+            // Use whichever is more current
+            if (webCurrentBlock > localCurrentBlock && webCurrentBlock > currentBlockzzzz) {
+                console.log('Using backup web data (most current)');
+                loadDataFromSource(webData, webCurrentBlock);
+                return true;
+            } else if (localCurrentBlock > currentBlockzzzz) {
+                console.log('Using local data (most current)');
+                loadDataFromSource(localData.data, localCurrentBlock);
+                return true;
+            } else {
+                console.log(`Already at current block ${currentBlockzzzz}`);
+                return false;
+            }
+            
+        } catch (backupError) {
+            console.error(`❌ Both primary and backup sources failed!`);
+            console.error(`Primary error: ${primaryError.message}`);
+            console.error(`Backup error: ${backupError.message}`);
+            
+            // Fall back to local data if both web sources fail
+            if (localData && localCurrentBlock > currentBlockzzzz) {
+                console.log('Falling back to local data (web sources unavailable)');
+                loadDataFromSource(localData.data, localCurrentBlock);
+                return true;
+            }
+            
+            console.log('Starting from scratch...');
+            return false;
+        }
+    }
+}
+
+// Helper function to load data from either source
+function loadDataFromSource(data, blockNumber) {
+    currentBlockzzzz = blockNumber;
+    
+    // Load valid positions
+    validPositions = [];
+    for (const posData of data.valid_positions || []) {
+        const position = {
+            tokenId: posData.token_id,
+            poolKey: {
+                currency0: posData.pool_key.currency0,
+                currency1: posData.pool_key.currency1,
+                fee: posData.pool_key.fee,
+                tickSpacing: posData.pool_key.tickSpacing,
+                hooks: posData.pool_key.hooks
+            },
+            owner: posData.owner,
+            blockNumber: posData.block_number,
+            txHash: posData.tx_hash,
+            timestamp: posData.timestamp
+        };
+        validPositions.push(position);
+    }
+    
+    // Load NFT owners
+    nftOwners = {};
+    const remoteNftOwners = data.nft_owners || {};
+    for (const [tokenId, owner] of Object.entries(remoteNftOwners)) {
+        nftOwners[parseInt(tokenId)] = owner;
+    }
+    
+    console.log(`✓ Loaded data from block ${blockNumber}`);
+    console.log(`  Valid positions: ${validPositions.length}`);
+    console.log(`  NFT owners: ${Object.keys(nftOwners).length}`);
+}
+
+
+// Contract interaction functions
+async function getPoolAndPositionInfo(tokenId) {
+    const functionSelector = "0x7ba03aad";
+    const encodedTokenId = tokenId.toString(16).padStart(64, '0');
+    const data = functionSelector + encodedTokenId;
+    
+    const result = await callContract(CONFIG.NFT_ADDRESS, data);
+    if (!result) return null;
+    
+    try {
+        const resultBytes = result.slice(2); // Remove 0x
+        
+        // Decode PoolKey struct
+        const currency0 = "0x" + resultBytes.slice(24, 64); // address at offset 0
+        const currency1 = "0x" + resultBytes.slice(88, 128); // address at offset 32
+        const fee = parseInt(resultBytes.slice(128, 192), 16); // uint24 at offset 64
+        const tickSpacing = parseInt(resultBytes.slice(192, 256), 16); // int24 at offset 96
+        const hooks = "0x" + resultBytes.slice(280, 320); // address at offset 128
+        
+        // Decode info uint256
+        const info = parseInt(resultBytes.slice(320, 384), 16);
+        
+        const poolKey = { currency0, currency1, fee, tickSpacing, hooks };
+        
+        return { poolKey, info };
+        
+    } catch (error) {
+        console.log(`Error decoding getPoolAndPositionInfo result: ${error.message}`);
+        return null;
+    }
+}
+
+// Log processing functions
+function processCreatePositionLogs(logs) {
+    const positions = [];
+    
+    for (const log of logs) {
+        try {
+            const topics = log.topics || [];
+            const txHash = log.transactionHash || "";
+            const blockNumber = parseInt(log.blockNumber, 16);
+            
+            if (topics.length > 0 && topics[0] === CONFIG.CREATE_POSITION_TOPIC) {
+                let tokenId;
+                if (topics.length >= 2) {
+                    tokenId = parseInt(topics[1], 16);
+                } else {
+                    const data = log.data || "0x";
+                    if (data.length >= 66) { // 0x + 64 chars
+                        tokenId = parseInt(data.slice(2, 66), 16);
+                    } else {
+                        continue;
+                    }
+                }
+                
+                positions.push({ tokenId, txHash, blockNumber });
+                console.log(`Found CreatePosition with token ID: ${tokenId}`);
+            }
+        } catch (error) {
+            console.log(`Error processing CreatePosition log: ${error.message}`);
+            continue;
+        }
+    }
+    
+    return positions;
+}
+
+function processTransferLogs(logs) {
+    const transfers = {};
+    const validTokenIds = new Set(validPositions.map(pos => pos.tokenId));
+    
+    if (validTokenIds.size === 0) {
+        return transfers;
+    }
+    
+    let processedCount = 0;
+    let ignoredCount = 0;
+    
+    for (const log of logs) {
+        try {
+            const topics = log.topics || [];
+            
+            if (topics.length >= 4 && topics[0] === CONFIG.TRANSFER_TOPIC) {
+                const fromAddress = "0x" + topics[1].slice(-40);
+                const toAddress = "0x" + topics[2].slice(-40);
+                const tokenId = parseInt(topics[3], 16);
+                
+                if (validTokenIds.has(tokenId)) {
+                    transfers[tokenId] = toAddress;
+                    console.log(`      ✓ Valid Transfer: Token ${tokenId} from ${fromAddress} to ${toAddress}`);
+                    processedCount++;
+                } else {
+                    ignoredCount++;
+                }
+            }
+        } catch (error) {
+            console.log(`Error processing Transfer log: ${error.message}`);
+            continue;
+        }
+    }
+    
+    if (ignoredCount > 0) {
+        console.log(`      Ignored ${ignoredCount} transfers for non-valid positions`);
+    }
+    if (processedCount > 0) {
+        console.log(`      Processed ${processedCount} transfers for valid positions`);
+    }
+    
+    return transfers;
+}
+
+async function validatePositions(positionData) {
+    const newValidPositions = [];
+    const newInvalidPositions = [];
+    
+    for (const { tokenId, txHash, blockNumber } of positionData) {
+        try {
+            const result = await getPoolAndPositionInfo(tokenId);
+            if (!result) {
+                console.log(`Could not get pool info for token ${tokenId}`);
+                continue;
+            }
+            
+            const { poolKey, info } = result;
+            
+            console.log(`\nToken ${tokenId}:`);
+            console.log(`  Currency0: ${poolKey.currency0}`);
+            console.log(`  Currency1: ${poolKey.currency1}`);
+            console.log(`  Fee: ${poolKey.fee}`);
+            console.log(`  TickSpacing: ${poolKey.tickSpacing}`);
+            console.log(`  Hooks: ${poolKey.hooks}`);
+            console.log(`  Info: ${info}`);
+            
+            const owner = nftOwners[tokenId] || "Unknown";
+            const timestamp = new Date().toISOString();
+            
+            const position = {
+                tokenId,
+                poolKey,
+                owner,
+                blockNumber,
+                txHash,
+                timestamp
+            };
+            
+            if (poolKeyMatches(poolKey, CONFIG.TARGET_POOL_KEY)) {
+                console.log(`  ✓ VALID - matches target pool`);
+                newValidPositions.push(position);
+            } else {
+                console.log(`  ✗ INVALID - does not match target pool`);
+                newInvalidPositions.push(position);
+            }
+            
+        } catch (error) {
+            console.log(`Error validating token ${tokenId}: ${error.message}`);
+            continue;
+        }
+    }
+    
+    return { newValidPositions, newInvalidPositions };
+}
+
+function calculateBlockRanges(fromBlock, toBlock) {
+    const ranges = [];
+    let current = fromBlock;
+    
+    while (current <= toBlock) {
+        const endBlock = Math.min(current + CONFIG.MAX_BLOCKS_PER_REQUEST - 1, toBlock);
+        ranges.push({ start: current, end: endBlock });
+        current = endBlock + 1;
+    }
+    
+    return ranges;
+}
+
+async function scanBlocks(fromBlock, toBlock) {
+    console.log(`\nScanning blocks ${fromBlock} to ${toBlock}...`);
+    
+    const blockRanges = calculateBlockRanges(fromBlock, toBlock);
+    const allTransfers = {};
+    
+    for (const { start, end } of blockRanges) {
+        console.log(`  Scanning sub-range: ${start} to ${end} (${end - start + 1} blocks)`);
+        
+        // Get CreatePosition logs
+        const createLogs = await getLogs(
+            start,
+            end,
+            [CONFIG.CREATE_POSITION_TOPIC],
+            CONFIG.POSITION_MANAGER_ADDRESS
+        );
+        
+        console.log(`    Found ${createLogs.length} CreatePosition events`);
+        await sleep(600);
+        // Get Transfer logs
+        const transferLogs = await getLogs(
+            start,
+            end,
+            [CONFIG.TRANSFER_TOPIC],
+            CONFIG.NFT_ADDRESS
+        );
+        
+        console.log(`    Found ${transferLogs.length} Transfer events`);
+        
+        // Process CreatePosition events
+        const positions = processCreatePositionLogs(createLogs);
+        
+        // Validate new positions
+        if (positions.length > 0) {
+            const { newValidPositions, newInvalidPositions } = await validatePositions(positions);
+            validPositions.push(...newValidPositions);
+            invalidPositions.push(...newInvalidPositions);
+        }
+        
+        // Process transfers for valid positions
+        if (validPositions.length > 0) {
+            const transfers = processTransferLogs(transferLogs);
+            Object.assign(allTransfers, transfers);
+        } else if (transferLogs.length > 0) {
+            console.log(`    No valid positions exist - skipping all ${transferLogs.length} transfer events`);
+        }
+    }
+    
+    // Update NFT ownership
+    if (Object.keys(allTransfers).length > 0) {
+        Object.assign(nftOwners, allTransfers);
+        
+        // Update ownership info in valid positions
+        for (const position of validPositions) {
+            if (allTransfers[position.tokenId]) {
+                position.owner = allTransfers[position.tokenId];
+            }
+        }
+    }
+
+    saveDataLocally();
+}
+
+function printSummary() {
+    console.log(`\n${'='.repeat(50)}`);
+    console.log("SUMMARY");
+    console.log(`${'='.repeat(50)}`);
+    console.log(`Blocks scanned: ${CONFIG.START_BLOCK} to ${currentBlockzzzz}`);
+    console.log(`Valid positions: ${validPositions.length}`);
+    console.log(`Invalid positions: ${invalidPositions.length}`);
+    console.log(`NFT owners tracked: ${Object.keys(nftOwners).length}`);
+    
+    if (validPositions.length > 0) {
+        console.log(`\nVALID POSITIONS:`);
+        for (const pos of validPositions) {
+            console.log(`  Token ID: ${pos.tokenId}, Owner: ${pos.owner}, Block: ${pos.blockNumber}`);
+        }
+    } else {
+        console.log(`\nNo valid positions found yet`);
+    }
+    
+    if (Object.keys(nftOwners).length > 0) {
+        console.log(`\nVALID NFT OWNERS (tracked):`);
+        for (const [tokenId, owner] of Object.entries(nftOwners)) {
+            console.log(`  Token ID: ${tokenId}, Owner: ${owner}`);
+        }
+    } else {
+        console.log(`No valid NFT owners being tracked`);
+    }
+}
+
+async function runOnce(blocksPerScan = 1000) {
+    const latestBlock = await getLatestBlock();
+    
+    if (currentBlockzzzz <= latestBlock) {
+        const blocksToScan = Math.min(blocksPerScan, latestBlock - currentBlockzzzz + 1);
+        const toBlock = currentBlockzzzz + blocksToScan - 1;
+        
+        console.log(`Latest block: ${latestBlock}, Current: ${currentBlockzzzz}, Scanning to: ${toBlock}`);
+        
+        await scanBlocks(currentBlockzzzz, toBlock);
+        currentBlockzzzz = toBlock + 1;
+    } else {
+        console.log(`Already caught up to block ${latestBlock}`);
+    }
+    
+    printSummary();
+    return latestBlock;
+}
+
+let WeAreSearchingLogsRightNow = false;
+let forceRefresh = false;
+
+function triggerRefresh() {
+    forceRefresh = true;
+    console.log("Force refresh triggered - will check for new blocks immediately");
+}
+
+async function runContinuous(blocksPerScan = 1000, sleepSeconds = 10) {
+    console.log("Starting continuous monitoring...");
+    console.log("Will continuously scan to the newest block");
+    console.log("Call stopMonitoring() to stop");
+    
+    showLoadingWidget('Loading all positions from Uniswap');
+    updateLoadingStatusWidget('Loading All Positions logs');
+    isRunning = true;
+    while (isRunning) {
+
+                WeAreSearchingLogsRightNow = true;
+        try {
+            var x=0;
+            const latestBlock = await getLatestBlock();
+            var numOfLoops = (latestBlock - currentBlockzzzz)/499;
+                            updateLoadingStatusWidget('Loading All Positions for users Loop #:'+ x + " MaxLoop #: " + numOfLoops);
+                            setLoadingProgress(Math.floor((x + 1) / (numOfLoops) * 100));
+            if (currentBlockzzzz <= latestBlock) {
+                            updateLoadingStatusWidget('Loading All Positions for users Loop #:'+ x + " MaxLoop #: " + numOfLoops);
+                            setLoadingProgress(Math.floor((x + 1) / (numOfLoops) * 100));
+                            x=x+1;
+                const remainingBlocks = latestBlock - currentBlockzzzz + 1;
+                console.log(`\n${remainingBlocks} blocks behind latest (${currentBlockzzzz} → ${latestBlock})`);
+                
+                while (currentBlockzzzz <= latestBlock && isRunning) {
+                    const currentLatest = await getLatestBlock();
+                    const blocksToScan = Math.min(blocksPerScan, currentLatest - currentBlockzzzz + 1);
+                    const toBlock = currentBlockzzzz + blocksToScan - 1;
+                    
+                    if (blocksToScan > 0) {
+                        console.log(`Scanning blocks ${currentBlockzzzz} to ${toBlock} (${blocksToScan} blocks)`);
+                        await scanBlocks(currentBlockzzzz, toBlock);
+                        currentBlockzzzz = toBlock + 1;
+                        
+                        if (currentBlockzzzz <= currentLatest && isRunning) {
+                            await sleep(2000);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                
+                saveDataLocally();
+                printSummary();
+                hideLoadingWidget();
+                console.log(`✓ Caught up to block ${latestBlock}`);
+                WeAreSearchingLogsRightNow = false;
+            } else {
+                WeAreSearchingLogsRightNow = false;
+                console.log(`Up to date at block ${latestBlock}`);
+            }
+            
+            if (isRunning && !forceRefresh) {
+                console.log(`Waiting ${sleepSeconds}s before checking for new blocks...`);
+                let test = 0;
+                while (!forceRefresh && test < sleepSeconds) {
+                    await sleep(1000); // Sleep 1 second at a time
+                    test = test + 1;
+                    if (test % 10 === 0) { // Print every 10 seconds
+                        console.log(`Still waiting... ${sleepSeconds - test}s remaining`);
+                    }
+                }
+            }
+            
+            if (forceRefresh) {
+                forceRefresh = false;
+                console.log("Force refresh activated - checking immediately");
+            }
+        } catch (error) {
+            console.error(`Error in monitoring loop: ${error.message}`);
+            if (isRunning) {
+                console.log("Retrying in 30 seconds...");
+                await sleep(30000);
+            }
+        }
+    }
+    
+    console.log("Monitor stopped.");
+    hideLoadingWidget();
+    saveDataLocally();
+    printSummary();
+}
+
+function stopMonitoring() {
+    isRunning = false;
+    console.log("Stopping monitor...");
+}
+
+// Public API functions
+function getNFTOwners() {
+    return nftOwners;
+}
+
+function getValidPositions() {
+    return validPositions;
+}
+
+function getCurrentBlock() {
+    return currentBlockzzzz;
+}
+
+// Main function
+async function mainRPCStarterForPositions() {
+    console.log("Initializing Uniswap V4 Monitor...");
+    
+                    await loadSettings();
+                    CONFIG.RPC_URL = customRPC;
+
+                    CONFIG.DATA_URL= customDataSource+ "testnet_uniswap_v4_data.json",
+
+    // Fetch existing data first
+    await fetchDataFromUrl();
+    
+    console.log("Starting monitoring...");
+    
+    // Run continuous monitoring (comment out to run just once)
+    await runContinuous(1996, 180);
+    
+    // Uncomment to run just once for testing
+    // await runOnce(1000);
+    
+    // Get the final result
+    const finalNftOwners = getNFTOwners();
+    const finalValidPositions = getValidPositions();
+    
+    console.log("\nFinal NFT Owners:", finalNftOwners);
+    console.log("Valid Positions:", finalValidPositions.length);
+    
+    return { nftOwners: finalNftOwners, validPositions: finalValidPositions };
+}
+
+
+// Option 2: Using DOMContentLoaded (fires earlier)
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(async () => {
+        await mainRPCStarterForPositions();
+    }, 500);
+});
                 //reload button javascript above
             </script>
 </body>
