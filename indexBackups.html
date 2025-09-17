@@ -7575,7 +7575,7 @@ body::before {
                         <label>Estimated Percentage of Staking Rewards this position is</label>
                         <input type="text" id="estimatedRewards" value="0.00 B0x" readonly style="background: #f8f9fa;">
                     </div>
-<h3 style="color: red"> You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.</h3>
+<h3 style="color: red"> You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days. It is tracked per NFT, so multiple NFTs will have different withdraw Penalities</h3>
                     <button class="btn-success" id="depositNFTStakeBtn" onclick="depositNFTStake()">Deposit
                         NFT</button><br></br><br></br>
 
@@ -13230,7 +13230,7 @@ function restoreDefaultCustomDataSource() {
                     }
 
                     disableButtonWithSpinner('depositNFTStakeBtn');
-                    alert('You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.');
+                    alert('You are now depositing a Uniswap v4 NFT Position to stake.  Withdrawl penalty is 20% to instant withdraw down to 3% after 15 days.  1% after 45 days.  It is tracked per NFT, so multiple NFTs will have different withdraw Penalities');
                     // Get position data for unclaimed fees
                     const positionSelect = document.querySelector('#staking-main-page select');
                     const selectedPositionId = positionSelect.value;
