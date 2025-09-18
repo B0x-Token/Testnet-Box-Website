@@ -16032,6 +16032,7 @@ function isEnabled(id, bool = null) {
                     const contractABI = [{ "inputs": [], "name": "epochCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }];
                     const contract = new ethers.Contract(ProofOfWorkAddresss, contractABI, providera);
                     epochCount = await contract.epochCount();
+                    console.log("epochCount: ",epochCount);
                     return epochCount.toString();
                 }
 
@@ -16488,7 +16489,24 @@ function isEnabled(id, bool = null) {
                     var total_TOTAL_mint_count_HASH = 0;
 
 
-                    var EpochCountBeforeCall = epochCount;
+                    var provids = provider;
+                    if (!walletConnected) {
+                        provids = providerTempStats;
+                    }
+                    console.log("Connect done");
+
+
+                    console.log("Connect done");
+
+                    // Alchemy recommends concurrent requests, so let's use them!
+                    // Group into logical batches under 50 requests each
+
+                      var epochCountsss = await getEpochCount(provids);
+
+
+                        console.log("EOCH COUNTZ : ",epochCountsss);
+                    var EpochCountBeforeCall = parseInt(epochCountsss);
+                    console.log("Before call epochCount: ",EpochCountBeforeCall);
                     var last_reward_eth_block = lastBaseBlock;
                     var current_eth_block = currentBlock;
                     var estimated_network_hashrate = estHashrate;
@@ -17426,10 +17444,10 @@ try {
                             nextEpochCnt = mined_blocks[index + 1][4];
                         }
 
-                        if (index === 0) {
-                            epchCount = EpochCountBeforeCall - epochCnt;
-                        } else if (nextEpochCnt !== null) {
+                        if (nextEpochCnt !== null) {
                             epchCount = epochCnt - nextEpochCnt;
+                        }else{
+                            epochCount = epochCnt;
                         }
                         index = index + 1;
 
@@ -17439,46 +17457,48 @@ try {
 
                         var transaction_url = _BLOCK_EXPLORER_TX_URL + tx_hash;
                         var block_url = _BLOCK_EXPLORER_BLOCK_URL + eth_block;
-
+                        console.log("EPOCH COUNT ADDING ", epchCount);
                         totalzkBTCMinted += parseFloat(epchCount);
 
-                        if (formattedNumberfffff == -1) {
-                            var parzedint = parseInt(totalzkBTCMinted);
-                            totalzkBTCMinted = 0.0;
-                            if (parzedint > 2016) {
-                                // parzedint = 2016;
-                            }
+                    if (formattedNumberfffff == -1) {
+                        var parzedint = parseInt(totalzkBTCMinted);
+                        totalzkBTCMinted = 0.0;
+                        
+                        if (parzedint > 2016) {
+                            // parzedint = 2016;
+                        }
 
-                            const formattedNumberparzedint = new Intl.NumberFormat(navigator.language).format(parzedint);
-                            var finalstr = "";
-                            const searchString = "PeriodNumberperiod";
-                            str = innerhtml_buffer;
-                            const lastIndex = str.lastIndexOf(searchString);
-                            if (lastIndex === -1) {
-                                finalstr = str;
-                            } else {
-                                const before = str.substring(0, lastIndex);
-                                const after = str.substring(lastIndex + searchString.length);
-                                finalstr = before + formattedNumberparzedint + after;
-                            }
-                            innerhtml_buffer = finalstr;
-
-                            if (eth_block > 25990908) {
-                                innerhtml_buffer += '<tr><td align="right" style="text-overflow:ellipsis;white-space: nowrap;overflow: hidden;">'
-                                    + get_date_from_eth_block(eth_block) + '</td><td>'
-                                    + '<b>New difficulty period</b>' + '</td><td>'
-                                    + '<b>New Challenge</b>'
-                                    + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>'+formattedNumberparzedint+' Mints</b></td></tr>';
-                                totalzkBTCMinted = 0.0;
-                            } else {
-                                innerhtml_buffer += '<tr><td align="right" style="text-overflow:ellipsis;white-space: nowrap;overflow: hidden;">'
-                                    + get_date_from_eth_block(eth_block) + '</td><td>'
-                                    + '<b>New difficulty period</b>' + '</td><td>'
-                                    + '<b>New Challenge</b>'
-                                    + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>0 Mints</b></td></tr>';
-                                totalzkBTCMinted = 0.0;
-                            }
+                        const formattedNumberparzedint = new Intl.NumberFormat(navigator.language).format(parzedint);
+                        
+                        // Update the PREVIOUS "New Challenge" row with this period's count
+                        var finalstr = "";
+                        const searchString = "PeriodNumberperiod";
+                        str = innerhtml_buffer;
+                        const lastIndex = str.lastIndexOf(searchString);
+                        if (lastIndex === -1) {
+                            finalstr = str;
                         } else {
+                            const before = str.substring(0, lastIndex);
+                            const after = str.substring(lastIndex + searchString.length);
+                            finalstr = before + formattedNumberparzedint + after;
+                        }
+                        innerhtml_buffer = finalstr;
+
+                        // Add the new period row with placeholder for next update
+                        if (eth_block > 25990908) {
+                            innerhtml_buffer += '<tr><td align="right" style="text-overflow:ellipsis;white-space: nowrap;overflow: hidden;">'
+                                + get_date_from_eth_block(eth_block) + '</td><td>'
+                                + '<b>New difficulty period</b>' + '</td><td>'
+                                + '<b>New Challenge</b>'
+                                + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>PeriodNumberperiod Mints</b></td></tr>';
+                        } else {
+                            innerhtml_buffer += '<tr><td align="right" style="text-overflow:ellipsis;white-space: nowrap;overflow: hidden;">'
+                                + get_date_from_eth_block(eth_block) + '</td><td>'
+                                + '<b>New difficulty period</b>' + '</td><td>'
+                                + '<b>New Challenge</b>'
+                                + '</td><td><b> Previous Period had</b></td><td class="stat-value"><b>PeriodNumberperiod Mints</b></td></tr>';
+                        }
+                    } else {
                             // Generate styled HTML for blocks with proper CSS classes
                             innerhtml_buffer += '<tr><td align="right" style="width: 200px;">'
                                 + get_date_from_eth_block(eth_block) + '</td><td class="hash2">'
