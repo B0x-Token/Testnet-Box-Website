@@ -17457,7 +17457,7 @@ try {
 
                         var transaction_url = _BLOCK_EXPLORER_TX_URL + tx_hash;
                         var block_url = _BLOCK_EXPLORER_BLOCK_URL + eth_block;
-                        console.log("EPOCH COUNT ADDING ", epchCount);
+                       // console.log("EPOCH COUNT ADDING ", epchCount);
                         totalzkBTCMinted += parseFloat(epchCount);
 
                     if (formattedNumberfffff == -1) {
