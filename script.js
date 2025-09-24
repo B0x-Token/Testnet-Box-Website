@@ -17963,23 +17963,10 @@ try {
                         }
 
                     }
+                    // Should always use actual blocks per day based on your hashrate
+const tokensPerDayMax = blocksPerDay * rewardPerBlock;
+maxTokensEl.textContent = tokensPerDayMax.toFixed(2);
 
-                    // Calculate tokens per day
-                    // Since reward is now calculated based on block time, min = max
-                    const tokensPerDayMax = blocksPerDay * rewardPerBlock;
-                    // Since reward is now calculated based on block time, min = max
-                    const tokensPerDayMax2 = blocksPerDay2 * rewardPerBlock;
-
-
-                    if (avgBlockTime < 600) {
-
-
-                        maxTokensEl.textContent = tokensPerDayMax.toFixed(2);
-                    } else {
-
-                        maxTokensEl.textContent = tokensPerDayMax2.toFixed(2);
-
-                    }
 
                     // Update the UI with calculated values
                     avgBlockTimeEl.textContent = formatTime(avgBlockTime);
